@@ -1,0 +1,57 @@
+\doxysection{include/\+command\+\_\+parser.h File Reference}
+\hypertarget{command__parser_8h}{}\label{command__parser_8h}\index{include/command\_parser.h@{include/command\_parser.h}}
+
+
+Parse function, which gets data from the terminal.  
+
+
+{\ttfamily \+\#include "{}../\+include/\+command.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{command__parser_8h_a9de9c0ba49b20e9ad715bbe1e5b95ff5}{parse\+\_\+command}} (int argc, char \texorpdfstring{$\ast$}{*}argv\+[$\,$]\+, \doxymbox{\hyperlink{struct_command}{Command}} \texorpdfstring{$\ast$}{*}cmd)
+\begin{DoxyCompactList}\small\item\em Function scans command terminal for file\textquotesingle{}s name, algorithm type and file output type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Parse function, which gets data from the terminal. 
+
+Function is being used to get initial data, that is necessary for program to work. \begin{DoxyAttention}{Attention}
+Program highly depends on order, in which arguments were typed in. Also it heavily depends on flags and the way user typed them. 
+\end{DoxyAttention}
+\begin{DoxyNote}{Note}
+To learn the way to properly type in data type \uline{/\+program help} or read our user\textquotesingle{}s manual 
+\end{DoxyNote}
+
+
+\label{doc-func-members}
+\Hypertarget{command__parser_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{command__parser_8h_a9de9c0ba49b20e9ad715bbe1e5b95ff5}\index{command\_parser.h@{command\_parser.h}!parse\_command@{parse\_command}}
+\index{parse\_command@{parse\_command}!command\_parser.h@{command\_parser.h}}
+\doxysubsubsection{\texorpdfstring{parse\_command()}{parse\_command()}}
+{\footnotesize\ttfamily \label{command__parser_8h_a9de9c0ba49b20e9ad715bbe1e5b95ff5} 
+int parse\+\_\+command (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{argv}{\+[$\,$]\+, }\item[{\doxymbox{\hyperlink{struct_command}{Command}} \texorpdfstring{$\ast$}{*}}]{cmd}{}\end{DoxyParamCaption})}
+
+
+
+Function scans command terminal for file\textquotesingle{}s name, algorithm type and file output type. 
+
+In the process of scanning terminal function detects flags and process them.
+
+Valid input will look like this:\+ ./\+name\+\_\+of\+\_\+the\+\_\+program $<$file\+\_\+name$>$ -\/a $<$algorithm\+\_\+type$>$ -\/t/\+-\/b
+
+Flags meaning:\+ -\/a -\/ precedes $<$algorithm\+\_\+type$>$. By default $<$algorithm\+\_\+type$>$ is triangulation. -\/t -\/ output file has txt format. -\/b -\/ output file has binary format. By default file has text format.
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & The number of input arguments. \\
+\hline
+{\em argv} & Array of the input arguments. \\
+\hline
+{\em cmd} & Structure elements, that are used for storing data passed in the terminal.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or error\textquotesingle{}s id. 
+\end{DoxyReturn}

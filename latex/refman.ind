@@ -1,0 +1,75 @@
+\begin{theindex}
+
+  \item {algorithm\_type}
+    \subitem {command.h}, \hyperpage{8}
+
+  \indexspace
+
+  \item {BINARY}
+    \subitem {command.h}, \hyperpage{8}
+
+  \indexspace
+
+  \item {Command}, \hyperpage{5}
+  \item {command.h}
+    \subitem {algorithm\_type}, \hyperpage{8}
+    \subitem {BINARY}, \hyperpage{8}
+    \subitem {file\_output\_type}, \hyperpage{8}
+    \subitem {SPECTRAL}, \hyperpage{8}
+    \subitem {TEXT}, \hyperpage{8}
+    \subitem {TRIANGULATION}, \hyperpage{8}
+  \item {command\_parser.h}
+    \subitem {parse\_command}, \hyperpage{10}
+  \item {create\_output\_file}
+    \subitem {io.h}, \hyperpage{13}
+
+  \indexspace
+
+  \item {deserialize\_file}
+    \subitem {io.h}, \hyperpage{13}
+
+  \indexspace
+
+  \item {Edge}, \hyperpage{5}
+
+  \indexspace
+
+  \item {file\_output\_type}
+    \subitem {command.h}, \hyperpage{8}
+
+  \indexspace
+
+  \item {include/command.h}, \hyperpage{7, 8}
+  \item {include/command\_executor.h}, \hyperpage{8, 9}
+  \item {include/command\_parser.h}, \hyperpage{9, 10}
+  \item {include/error\_handler.h}, \hyperpage{10, 11}
+  \item {include/graph.h}, \hyperpage{11, 12}
+  \item {include/io.h}, \hyperpage{12, 13}
+  \item {include/spectral.h}, \hyperpage{14}
+  \item {include/triangulation.h}, \hyperpage{14}
+  \item {io.h}
+    \subitem {create\_output\_file}, \hyperpage{13}
+    \subitem {deserialize\_file}, \hyperpage{13}
+
+  \indexspace
+
+  \item {Node}, \hyperpage{6}
+
+  \indexspace
+
+  \item {parse\_command}
+    \subitem {command\_parser.h}, \hyperpage{10}
+
+  \indexspace
+
+  \item {SPECTRAL}
+    \subitem {command.h}, \hyperpage{8}
+
+  \indexspace
+
+  \item {TEXT}
+    \subitem {command.h}, \hyperpage{8}
+  \item {TRIANGULATION}
+    \subitem {command.h}, \hyperpage{8}
+
+\end{theindex}
