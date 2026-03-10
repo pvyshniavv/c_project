@@ -1,16 +1,16 @@
 /**
  * @file command_parser.h
- * @brief Parse function, which gets data from the terminal.
+ * @brief Parse function, which gets terminal command.
  *
- * @details Function is being used to get initial data, that is necessary for program to work.
- * @attention Program highly depends on order, in which arguments were typed in.
- * Also it heavily depends on flags and the way user typed them.
- * @note To learn the way to properly type in data type <u>/program help</u> or read our user's manual
+ * @details Function is being used to get initial data, that is necessary for the program to work.
+ * @attention Program highly depends on the order, in which arguments were typed in.
+ * Also it heavily depends on the flags and the way user typed them.
+ * @note To learn the way to properly type in data, type <u>/program help</u> or read our user's manual
  */
 
 #ifndef FLAG_PARSER_H
 #define FLAG_PARSER_H
-#include "../include/command.h"
+#include "command.h"
 
 /**
  * @brief Function scans command terminal for file's name, algorithm type and file output type.

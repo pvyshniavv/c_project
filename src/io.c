@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "../include/command.h"
 #include "../include/graph.h"
 #include "../include/io.h"
 
@@ -14,6 +15,11 @@ static int check_file(FILE *filename)
 }
 
 int deserialize_file(char *filename, Edge *elements)
+{
+    return 0;
+}
+
+int create_output_file(enum file_output_type format, const Node *elements, FILE new_file)
 {
     return 0;
 }

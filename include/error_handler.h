@@ -25,6 +25,11 @@
 #define ERROR (2)                   ///< to be continued.
 /** @} */
 
+/**
+ * @brief Function, which tells the program how to act in case if different types of error.
+ *
+ * @param error_id error type.
+ */
 void handle_error(int error_id);
 
 #endif // ERROR_HANDLER_H

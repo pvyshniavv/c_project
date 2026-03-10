@@ -15,9 +15,9 @@
  * @brief Structure, which contains graph partitioned into edges.
  *
  */
-typedef struct
+typedef struct Edge
 {
-    char edge_name[2];       ///< Name of the edge (e.g. AB).
+    char edge_name[3];       ///< Name of the edge (e.g. AB).
     unsigned int start_node; ///< Ordinal number of the edge's starting node.
     unsigned int end_node;   ///< Ordinal number of the edge's ending node.
     double weight;           ///< Edge's weight.
@@ -28,12 +28,12 @@ typedef struct
  * @brief Structure, which contains graph partitioned into vertices.
  *
  */
-typedef struct
+typedef struct Node
 {
     unsigned int node; ///< Ordinal number of the node.
     double x_axis;     ///< Node's position in the x axis.
     double y_axis;     ///< Node's position in the y axis.
-    struct Node *next;
+    struct Node *next; ///< Pointer to the next node.
 } Node;
 
 #endif // GRAPH_H
