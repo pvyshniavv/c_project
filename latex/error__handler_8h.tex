@@ -1,0 +1,37 @@
+\doxysection{include/\+error\+\_\+handler.h File Reference}
+\hypertarget{error__handler_8h}{}\label{error__handler_8h}\index{include/error\_handler.h@{include/error\_handler.h}}
+
+
+Errors\textquotesingle{} constants, their definition and function(handle\+\_\+error) that acts accordingly to the error type.  
+
+
+\doxysubsubsection*{Macros}
+\begin{Indent}\textbf{ Standard Error Codes.}\par
+{\em Initializing Errors\textquotesingle{} IDs definition for functions that can fail. }\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{error__handler_8h_a176960f93d11db6f58d10a6957a80f38}\label{error__handler_8h_a176960f93d11db6f58d10a6957a80f38} 
+\+\#define {\bfseries ERROR\+\_\+\+INVALID\+\_\+\+PARAMETER}~(1)
+\begin{DoxyCompactList}\small\item\em Invalid argument passed. \end{DoxyCompactList}\item 
+\Hypertarget{error__handler_8h_a8fe83ac76edc595f6b98cd4a4127aed5}\label{error__handler_8h_a8fe83ac76edc595f6b98cd4a4127aed5} 
+\+\#define {\bfseries ERROR}~(2)
+\begin{DoxyCompactList}\small\item\em to be continued. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{error__handler_8h_a6701209b36cc1e8f1cbaafb8e82db5ee}\label{error__handler_8h_a6701209b36cc1e8f1cbaafb8e82db5ee} 
+void {\bfseries handle\+\_\+error} (int error\+\_\+id)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Errors\textquotesingle{} constants, their definition and function(handle\+\_\+error) that acts accordingly to the error type. 
+
+Every error that can be present in our program is listed here. Every error has its unique id (e.\+g 1, 2, 25). IDs from 1-\/10 correspond to general and common errors. IDs that start from digit 2 correspond to errors related to files.
+
+\begin{DoxyAttention}{Attention}
+As the project grows, more errors appear. When they do, make sure that you use this list and add every single error here. When you add new error constants, don\textquotesingle{}t forget to add description to them. 
+\end{DoxyAttention}
+\begin{DoxyWarning}{Warning}
+NEVER USE RAW NUMBERS AS ERROR TYPES! 
+\end{DoxyWarning}
