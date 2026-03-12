@@ -22,8 +22,7 @@
  * @{
  */
 #define ERROR_INVALID_PARAMETER (1) ///< Invalid argument passed.
-#define ERROR (2)                   ///< to be continued.
-/** @} */
+#define ERROR_NO_FILE_GIVEN (20)    ///< User didn't pass any file to the program
 
 /**
  * @brief Function, which tells the program how to act in case if different types of error.
