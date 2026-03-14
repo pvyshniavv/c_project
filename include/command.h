@@ -18,7 +18,7 @@
 enum algorithm_type
 {
     TRIANGULATION, ///< Used for highlighting chosen algorithm type, in our case triangulation algorithm.
-    SPECTRAL       ///< Used for highlighting chosen algorithm type, in our case spectral algorithm.
+    FRUCHTERMAN    ///< Used for highlighting chosen algorithm type, in our case fruchterman algorithm.
 };
 
 /**
