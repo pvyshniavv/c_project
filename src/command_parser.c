@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <unistd.h>
+#include <string.h>
 #include <getopt.h>
 #include "../include/command.h"
 #include "../include/command_parser.h"
@@ -7,6 +7,7 @@
 
 #define MINIMUM_NUMBER_OF_ARGUMENTS (2)
 #define RETURN_SHORT_VERSION_OF_A_FLAG (0)
+#define MATCH (0)
 #define FAIL (-1)
 
 static void execute_help()
@@ -31,13 +32,15 @@ int parse_command(int argc, char *argv[], Command *cmd)
         {"help", no_argument, RETURN_SHORT_VERSION_OF_A_FLAG, 'h'},
         {0, 0, 0, 0}};
 
-    while (catch_flag = (getopt_long(argc, argv, "a:tbo:h", long_option, &option_index)) != FAIL)
+    while ((catch_flag = (getopt_long(argc, argv, "a:tbo:h", long_option, NULL))) != FAIL)
     {
         switch (catch_flag)
         {
         case 'a':
-            if (optarg == "fruchterman" || optarg == "triangulation")
-                cmd->chosen_algorithm = optarg;
+            if (strcmp(optarg, "fruchterman") == MATCH)
+                cmd->chosen_algorithm = FRUCHTERMAN;
+            else if (strcmp(optarg, "triangulation") == MATCH)
+                cmd->chosen_algorithm = TRIANGULATION;
             else
                 return INVALID_ALGORITHM_TYPE;
             break;
