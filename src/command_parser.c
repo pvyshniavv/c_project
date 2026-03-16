@@ -63,7 +63,8 @@ int parse_command(int argc, char *argv[], Command *cmd)
         }
     }
 
-    if (strcmp(cmd->output_file_path, NULL) == MATCH)
+    if (cmd->output_file_path == NULL)
         return ERROR_NO_OUTPUT_FILE_PATH_WAS_GIVEN;
+
     return 0;
 }
