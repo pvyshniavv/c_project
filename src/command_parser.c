@@ -5,11 +5,13 @@
 #include "../include/command_parser.h"
 #include "../include/error_handler.h"
 
-#define MINIMUM_NUMBER_OF_ARGUMENTS (2)
+/* Constant values assigned to numbers*/
+#define MINIMUM_NUMBER_OF_ARGUMENTS (4) // 1 - program_name, 2 - input_file_path, 3 - flag -o/--output, 4 - output_file_path
 #define RETURN_SHORT_VERSION_OF_A_FLAG (0)
 #define MATCH (0)
 #define FAIL (-1)
 
+/* Function which prints out the help message */
 static void execute_help()
 {
     printf("THIS IS THE FUTURE HELP MENU\n");
@@ -17,10 +19,12 @@ static void execute_help()
 
 int parse_command(int argc, char *argv[], Command *cmd)
 {
+    // assigning default values
     cmd->chosen_algorithm = FRUCHTERMAN;
     cmd->chosen_format = TEXT;
     cmd->output_file_path = NULL;
 
+    // check for minimum number of arguments
     if (argc >= MINIMUM_NUMBER_OF_ARGUMENTS)
         cmd->input_file_path = argv[1];
     else
@@ -28,6 +32,7 @@ int parse_command(int argc, char *argv[], Command *cmd)
 
     int catch_flag;
 
+    // structure of the long flags
     struct option long_option[] = {
         {"algorithm", required_argument, RETURN_SHORT_VERSION_OF_A_FLAG, 'a'},
         {"text", no_argument, RETURN_SHORT_VERSION_OF_A_FLAG, 't'},
@@ -36,6 +41,7 @@ int parse_command(int argc, char *argv[], Command *cmd)
         {"help", no_argument, RETURN_SHORT_VERSION_OF_A_FLAG, 'h'},
         {0, 0, 0, 0}};
 
+    // checking for flags
     while ((catch_flag = (getopt_long(argc, argv, "a:tbo:h", long_option, NULL))) != FAIL)
     {
         switch (catch_flag)
@@ -63,6 +69,7 @@ int parse_command(int argc, char *argv[], Command *cmd)
         }
     }
 
+    // checking if the user's passed in the output file path
     if (cmd->output_file_path == NULL)
         return ERROR_NO_OUTPUT_FILE_PATH_WAS_GIVEN;
 
