@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <getopt.h>
-#include "../include/command.h"
-#include "../include/command_parser.h"
-#include "../include/error_handler.h"
+#include "command.h"
+#include "command_parser.h"
+#include "error_handler.h"
 
 /* Constant values assigned to numbers*/
 #define MINIMUM_NUMBER_OF_ARGUMENTS (4) // 1 - program_name, 2 - input_file_path, 3 - flag -o/--output, 4 - output_file_path

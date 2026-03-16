@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "../include/command.h"
-#include "../include/graph.h"
-#include "../include/io.h"
+#include "command.h"
+#include "graph.h"
+#include "io.h"
 
 /**
  * @brief function checks if the file is valid
