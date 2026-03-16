@@ -17,10 +17,14 @@ static void execute_help()
 
 int parse_command(int argc, char *argv[], Command *cmd)
 {
+    cmd->chosen_algorithm = FRUCHTERMAN;
+    cmd->chosen_format = TEXT;
+    cmd->output_file_path = NULL;
+
     if (argc >= MINIMUM_NUMBER_OF_ARGUMENTS)
-        cmd->input_file_name_or_path = argv[1];
+        cmd->input_file_path = argv[1];
     else
-        return ERROR_NO_FILE_GIVEN;
+        return ERROR_NO_INPUT_FILE_PATH_WAS_GIVEN;
 
     int catch_flag;
 
@@ -51,12 +55,15 @@ int parse_command(int argc, char *argv[], Command *cmd)
             cmd->chosen_format = BINARY;
             break;
         case 'o':
-            cmd->output_file_name_or_path = optarg;
+            cmd->output_file_path = optarg;
             break;
         case 'h':
             execute_help();
             return INITIALIZE_HELP;
         }
     }
+
+    if (strcmp(cmd->output_file_path, NULL) == MATCH)
+        return ERROR_NO_OUTPUT_FILE_PATH_WAS_GIVEN;
     return 0;
 }

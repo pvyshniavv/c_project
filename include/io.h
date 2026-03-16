@@ -26,6 +26,6 @@ int deserialize_file(char *filename, Edge *empty_graph);
  * @param new_file file, which stores data.
  * @return 0 or error's id.
  */
-int create_output_file(enum file_output_type format, const Node *transformed_graph, char *output_file_name_or_path);
+int create_output_file(enum file_output_type format, const Node *transformed_graph, char *output_file_path);
 
 #endif // IO_H

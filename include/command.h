@@ -37,8 +37,8 @@ enum file_output_type
  */
 typedef struct
 {
-    char *input_file_name_or_path;        ///< Used for storing input file's name/path.
-    char *output_file_name_or_path;       ///< Used for storing output file's name/path.
+    char *input_file_path;                ///< Used for storing input file's path.
+    char *output_file_path;               ///< Used for storing output file's path.
     enum algorithm_type chosen_algorithm; ///< Used for storing algorithm's type.
     enum file_output_type chosen_format;  ///< Used for storing desired format of the output file.
 } Command;
