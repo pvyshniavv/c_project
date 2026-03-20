@@ -18,7 +18,7 @@
 enum algorithm_type
 {
     TRIANGULATION, ///< Used for highlighting chosen algorithm type, in our case triangulation algorithm.
-    SPECTRAL       ///< Used for highlighting chosen algorithm type, in our case spectral algorithm.
+    FRUCHTERMAN    ///< Used for highlighting chosen algorithm type, in our case fruchterman algorithm.
 };
 
 /**
@@ -37,7 +37,8 @@ enum file_output_type
  */
 typedef struct
 {
-    char *file_name;                      ///< Used for storing file's name.
+    char *input_file_path;                ///< Used for storing input file's path.
+    char *output_file_path;               ///< Used for storing output file's path.
     enum algorithm_type chosen_algorithm; ///< Used for storing algorithm's type.
     enum file_output_type chosen_format;  ///< Used for storing desired format of the output file.
 } Command;

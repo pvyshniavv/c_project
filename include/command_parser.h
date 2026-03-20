@@ -21,11 +21,15 @@
  * ./name_of_the_program <file_name> -a <algorithm_type> -t/-b
  *
  * Flags meaning:
- * -a - precedes <algorithm_type>.
+ * -a/--algorithm - precedes <algorithm_type>.
  * By default <algorithm_type> is triangulation.
- * -t - output file has txt format.
- * -b - output file has binary format.
+ * -t/--text - output file has txt format.
+ * -b/--binary - output file has binary format.
+ * -h/--help - user's manual output
+ * -o/--output - precedes name/path to the output file
+ * By default the directory is the same where the program is located
  * By default file has text format.
+ *
  *
  * @param argc The number of input arguments.
  * @param argv Array of the input arguments.
