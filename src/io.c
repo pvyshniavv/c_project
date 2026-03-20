@@ -2,6 +2,7 @@
 #include "command.h"
 #include "graph.h"
 #include "io.h"
+#include "error_handler.h"
 
 /**
  * @brief function checks if the file is valid
@@ -12,6 +13,10 @@
 
 int deserialize_file(char *filename, Edge *elements)
 {
+    FILE *file_containing_graph = fopen("filename", "r");
+    if (file_containing_graph == NULL)
+        return FILE_DOES_NOT_EXIST;
+    fclose(file_containing_graph);
     return 0;
 }
 
