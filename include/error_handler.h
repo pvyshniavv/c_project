@@ -26,6 +26,7 @@
 #define ERROR_NO_INPUT_FILE_PATH_WAS_GIVEN (20)  ///< User didn't pass input file's path to the program.
 #define ERROR_NO_OUTPUT_FILE_PATH_WAS_GIVEN (21) ///< User didn't pass output file's path to the program.
 #define FILE_DOES_NOT_EXIST (22)
+#define ERROR_POINTS_TO_NULL (4)
 
 /**
  * @brief Function, which tells the program how to act in case if different types of error.
