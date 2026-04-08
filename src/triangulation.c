@@ -4,6 +4,11 @@
 #include "triangulation.h"
 #include "error_handler.h"
 
+#define EDGE_EXISTS (1)
+#define VISITED (1)
+#define STARTING_NODE (1)
+#define STARTING_PARENT_NODE (-1)
+
 static unsigned int get_max_node_id(const Edge *graph)
 {
     unsigned int max_id = 0;
@@ -42,9 +47,44 @@ static int use_euler_planarity_test(int **adj_matrix, int matrix_size, int total
         // deduplicating undirected edges
         for (int j = i + 1; j < matrix_size; j++)
         {
-            if (adj_matrix[i][j] == 1)
+            if (adj_matrix[i][j] == EDGE_EXISTS)
             {
                 edge_count++;
+            }
+        }
+    }
+
+    /**
+     * @brief Recursive DFS to find cycles and add dummy edges.
+     * * @param current_node The intersection we are currently standing on.
+     * @param parent_node The intersection we just came from.
+     * @param adj_matrix The 2D graph grid.
+     * @param visited Array tracking where we have been.
+     * @param matrix_size Size of the matrix (for our loops).
+     */
+    static void dfs_find_holes(int current_node, int parent_node, int **adj_matrix, int *visited, int matrix_size)
+    {
+        visited[current_node] = VISITED;
+
+        for (int j = 1; j < matrix_size; j++)
+        {
+            if (adj_matrix[current_node][j] == EDGE_EXISTS)
+            {
+                // restriction considering the node we're just visited
+                if (j == parent_node)
+                {
+                    continue;
+                }
+
+                // Cycle detected
+                if (visited[j] == VISITED)
+                {
+                }
+                else
+                {
+                    // Call this function as a recursion
+                    dfs_find_holes(j, current_node, adj_matrix, visited, matrix_size);
+                }
             }
         }
     }
@@ -103,10 +143,10 @@ int triangulate_graph(const Edge *initial_graph, Node *output_graph)
     while (current_edge != NULL)
     {
         // From Start to End
-        adj_matrix[current_edge->start_node][current_edge->end_node] = 1;
+        adj_matrix[current_edge->start_node][current_edge->end_node] = EDGE_EXISTS;
 
         // Marking the reverse connection too, because it's an undirected graph
-        adj_matrix[current_edge->end_node][current_edge->start_node] = 1;
+        adj_matrix[current_edge->end_node][current_edge->start_node] = EDGE_EXISTS;
 
         current_edge = current_edge->next;
     }
@@ -123,6 +163,22 @@ int triangulate_graph(const Edge *initial_graph, Node *output_graph)
 
         return ERROR_GRAPH_NOT_PLANAR;
     }
+
+    int *visited = calloc(matrix_size, sizeof(int));
+    if (visited == NULL)
+    {
+        for (int i = 0; i < matrix_size; i++)
+        {
+            free(adj_matrix[i]);
+        }
+        free(adj_matrix);
+
+        return ERROR_POINTS_TO_NULL;
+    }
+
+    dfs_find_holes(STARTING_NODE, STARTING_PARENT_NODE, adj_matrix, visited, matrix_size);
+
+    free(visited);
 
     // freeing memory
     for (int i = 0; i < matrix_size; i++)
