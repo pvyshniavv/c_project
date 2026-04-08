@@ -23,6 +23,45 @@ static unsigned int get_max_node_id(const Edge *graph)
     return max_id;
 }
 
+/**
+ * @brief Checks if a graph passes Euler's planarity formula (E <= 3V - 6).
+ * @return 0 if it passes (or has < 3 vertices), ERROR_GRAPH_NOT_PLANAR if it is mathematically non-planar.
+ */
+static int use_euler_planarity_test(int **adj_matrix, int matrix_size, int total_vertices)
+{
+    // if less then 3 graph is always planar
+    if (total_vertices < 3)
+    {
+        return 0;
+    }
+
+    unsigned int edge_count = 0;
+
+    for (int i = 1; i < matrix_size; i++)
+    {
+        // deduplicating undirected edges
+        for (int j = i + 1; j < matrix_size; j++)
+        {
+            if (adj_matrix[i][j] == 1)
+            {
+                edge_count++;
+            }
+        }
+    }
+
+    // calcualting max edges that a planar graph could have using Euler's formula:
+    // E <= 3V - 6
+    unsigned int max_planar_edges = (3 * total_vertices) - 6;
+
+    // check if there are too many edges
+    if (max_planar_edges < edge_count)
+    {
+        return ERROR_GRAPH_NOT_PLANAR; // test is not passed
+    }
+
+    return 0; // test is successfully passed
+}
+
 int triangulate_graph(const Edge *initial_graph, Node *output_graph)
 {
     // checking for the graphs to be allocated
@@ -38,7 +77,7 @@ int triangulate_graph(const Edge *initial_graph, Node *output_graph)
     unsigned int matrix_size = total_vertices + 1; // increasing size for indexing to start from 1
 
     // allocating memory for the adjacency matrix
-    int **adj_matrix = malloc(matrix_size * sizeof(*int));
+    int **adj_matrix = malloc(matrix_size * sizeof(int *));
     if (adj_matrix == NULL)
     {
         return ERROR_POINTS_TO_NULL;
@@ -46,7 +85,7 @@ int triangulate_graph(const Edge *initial_graph, Node *output_graph)
 
     for (int i = 0; i < matrix_size; i++)
     {
-        adj_matrix[i] = calloc(matrix_size * sizeof(int));
+        adj_matrix[i] = calloc(matrix_size, sizeof(int));
         if (adj_matrix[i] == NULL)
         {
             for (int j = 0; j < i; j++)
@@ -60,7 +99,7 @@ int triangulate_graph(const Edge *initial_graph, Node *output_graph)
 
     const Edge *current_edge = initial_graph;
 
-    // marking connections
+    // populating matrix
     while (current_edge != NULL)
     {
         // From Start to End
@@ -72,10 +111,23 @@ int triangulate_graph(const Edge *initial_graph, Node *output_graph)
         current_edge = current_edge->next;
     }
 
+    // check if the graph has 3 or more vertices to then check if it's a planar graph
+    // graph with less then 3 vertices if always planar
+    if (use_euler_planarity_test(adj_matrix, matrix_size, total_vertices) == ERROR_GRAPH_NOT_PLANAR)
+    {
+        for (int i = 0; i < matrix_size; i++)
+        {
+            free(adj_matrix[i]);
+        }
+        free(adj_matrix);
+
+        return ERROR_GRAPH_NOT_PLANAR;
+    }
+
     // freeing memory
     for (int i = 0; i < matrix_size; i++)
     {
-        free(adj_matrx[i]);
+        free(adj_matrix[i]);
     }
     free(adj_matrix);
 
