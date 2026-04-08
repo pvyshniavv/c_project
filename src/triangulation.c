@@ -53,42 +53,6 @@ static int use_euler_planarity_test(int **adj_matrix, int matrix_size, int total
             }
         }
     }
-
-    /**
-     * @brief Recursive DFS to find cycles and add dummy edges.
-     * * @param current_node The intersection we are currently standing on.
-     * @param parent_node The intersection we just came from.
-     * @param adj_matrix The 2D graph grid.
-     * @param visited Array tracking where we have been.
-     * @param matrix_size Size of the matrix (for our loops).
-     */
-    static void dfs_find_holes(int current_node, int parent_node, int **adj_matrix, int *visited, int matrix_size)
-    {
-        visited[current_node] = VISITED;
-
-        for (int j = 1; j < matrix_size; j++)
-        {
-            if (adj_matrix[current_node][j] == EDGE_EXISTS)
-            {
-                // restriction considering the node we're just visited
-                if (j == parent_node)
-                {
-                    continue;
-                }
-
-                // Cycle detected
-                if (visited[j] == VISITED)
-                {
-                }
-                else
-                {
-                    // Call this function as a recursion
-                    dfs_find_holes(j, current_node, adj_matrix, visited, matrix_size);
-                }
-            }
-        }
-    }
-
     // calcualting max edges that a planar graph could have using Euler's formula:
     // E <= 3V - 6
     unsigned int max_planar_edges = (3 * total_vertices) - 6;
@@ -100,6 +64,41 @@ static int use_euler_planarity_test(int **adj_matrix, int matrix_size, int total
     }
 
     return 0; // test is successfully passed
+}
+
+/**
+ * @brief Recursive DFS to find cycles and add dummy edges.
+ * * @param current_node The intersection we are currently standing on.
+ * @param parent_node The intersection we just came from.
+ * @param adj_matrix The 2D graph grid.
+ * @param visited Array tracking where we have been.
+ * @param matrix_size Size of the matrix (for our loops).
+ */
+static void dfs_find_holes(int current_node, int parent_node, int **adj_matrix, int *visited, int matrix_size)
+{
+    visited[current_node] = VISITED;
+
+    for (int j = 1; j < matrix_size; j++)
+    {
+        if (adj_matrix[current_node][j] == EDGE_EXISTS)
+        {
+            // restriction considering the node we're just visited
+            if (j == parent_node)
+            {
+                continue;
+            }
+
+            // Cycle detected
+            if (visited[j] == VISITED)
+            {
+            }
+            else
+            {
+                // Call this function as a recursion
+                dfs_find_holes(j, current_node, adj_matrix, visited, matrix_size);
+            }
+        }
+    }
 }
 
 int triangulate_graph(const Edge *initial_graph, Node *output_graph)
