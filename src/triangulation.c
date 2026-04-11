@@ -74,9 +74,10 @@ static int use_euler_planarity_test(int **adj_matrix, int matrix_size, int total
  * @param visited Array tracking where we have been.
  * @param matrix_size Size of the matrix (for our loops).
  */
-static void dfs_find_holes(int current_node, int parent_node, int **adj_matrix, int *visited, int matrix_size)
+static void dfs_find_holes(int current_node, int parent_node, int **adj_matrix, int *visited, int matrix_size, int *pathstack, int depth)
 {
     visited[current_node] = VISITED;
+    pathstack[depth] = current_node;
 
     for (int j = 1; j < matrix_size; j++)
     {
@@ -91,11 +92,41 @@ static void dfs_find_holes(int current_node, int parent_node, int **adj_matrix, 
             // Cycle detected
             if (visited[j] == VISITED)
             {
+                int cycle_length = 0;
+                int cycle_start_index = 0;
+
+                for (int current_depth = depth; current_depth >= 0; current_depth--)
+                {
+                    cycle_length++;
+
+                    // cycle is ended
+                    if (pathstack[current_depth] == j)
+                    {
+                        cycle_start_index = current_depth;
+                        break;
+                    }
+                }
+
+                // triangulation...
+
+                // checking if there's a hole
+                if (cycle_length > 3)
+                {
+                    int anchor_node = pathstack[depth];
+
+                    // create dummy edge
+                    for (int k = depth - 2; k > cycle_start_index; k--)
+                    {
+                        int target_node = pathstack[k];
+
+                        adj_matrix[anchor_node][target_node] = EDGE_EXISTS;
+                        adj_matrix[target_node][anchor_node] = EDGE_EXISTS;
+                    }
+                }
             }
             else
             {
-                // Call this function as a recursion
-                dfs_find_holes(j, current_node, adj_matrix, visited, matrix_size);
+                dfs_find_holes(j, current_node, adj_matrix, visited, matrix_size, pathstack, depth + 1); // Calling this function as a recursion
             }
         }
     }
@@ -175,9 +206,25 @@ int triangulate_graph(const Edge *initial_graph, Node *output_graph)
         return ERROR_POINTS_TO_NULL;
     }
 
-    dfs_find_holes(STARTING_NODE, STARTING_PARENT_NODE, adj_matrix, visited, matrix_size);
+    int *pathstack = calloc(matrix_size, sizeof(int));
+    if (pathstack == NULL)
+    {
+        free(visited);
+        for (int i = 0; i < matrix_size; i++)
+        {
+            free(adj_matrix[i]);
+        }
+        free(adj_matrix);
+
+        return ERROR_POINTS_TO_NULL;
+    }
+
+    unsigned int depth = 0;
+
+    dfs_find_holes(STARTING_NODE, STARTING_PARENT_NODE, adj_matrix, visited, matrix_size, pathstack, depth);
 
     free(visited);
+    free(pathstack);
 
     // freeing memory
     for (int i = 0; i < matrix_size; i++)
