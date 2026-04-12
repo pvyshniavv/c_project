@@ -75,5 +75,31 @@ int deserialize_file(char *filename, Edge *elements)
 
 int create_output_file(enum file_output_type format, const Node *elements, char *output_file_path)
 {
+    if(output_file_path== NULL || elements == NULL) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    FILE *f;
+    if(format == TEXT) {
+        f = fopen(output_file_path, "w");
+        } else {
+            f = fopen(output_file_path, "wb");
+        }
+
+        if(f == NULL) {
+            return ERROR_CANNOT_OPEN_FILE;
+        }
+
+        const Node *current = elements->next;
+        while(current != NULL) {
+            if(format == TEXT) {
+                fprintf(f, "%u %.2f %.2f\n", current->node, current->x_axis, current->y_axis);
+            }
+            else if (format == BINARY) {
+                
+            }
+        }
+
+
     return 0;
 }

@@ -25,4 +25,10 @@ void handle_error(int error_id)
     {
         printf("Hope it helped\n");
     }
+    if(error_id == ERROR_CANNOT_OPEN_FILE) 
+    {
+        printf("ERROR!\n");
+        printf("Cannot open or create file.\n");
+        printf("If you dont know, how to use the program properly, please, type\n [-h\\--help] - to open short instructions");
+    }
 }
