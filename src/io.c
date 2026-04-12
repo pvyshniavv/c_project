@@ -22,7 +22,7 @@ int deserialize_file(char *filename, Edge *elements)
     FILE *f = fopen( filename, "r");
     if(f == NULL) {
     perror ("Brak pliku.");
-    return 0; 
+    return ERROR_NO_INPUT_FILE_PATH_WAS_GIVEN; 
 }
 
 
@@ -30,7 +30,7 @@ int deserialize_file(char *filename, Edge *elements)
 
     char temp_name[3];
     unsigned int temp_start, temp_end;
-    double temp_wieght;
+    double temp_weight;
 
     //creating buffer for saving text-line form file
     char buffer[256];
@@ -45,10 +45,21 @@ int deserialize_file(char *filename, Edge *elements)
                 return ERROR_INVALID_PARAMETER;
             }
 
-            
+            //coping the data to the new structure
+            strcpy(new_edge->edge_name, temp_name);
+            new_edge->start_node = temp_start;
+            new_edge->end_node = temp_end;
+            new_edge->weight = temp_weight;
+            new_edge->next = NULL;
+
+            current->next = new_edge;
+            current = new_edge;
+
         }
     }
 
+    fclose(f);
+    return 0;
 
 }
 
