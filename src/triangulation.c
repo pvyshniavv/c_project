@@ -132,6 +132,124 @@ static void dfs_find_holes(int current_node, int parent_node, int **adj_matrix, 
     }
 }
 
+static int get_canonical_order(int **adj_matrix, int matrix_size, int total_vertices, int *canonical_order)
+{
+    // declaring foundation nodes
+    int v1 = 0, v2 = 0, vn = 0;
+    bool foundation_found = false;
+
+    for (int i = 1; i <= total_vertices && !foundation_found; i++)
+    {
+        for (int j = i + 1; j <= total_vertices && !foundation_found; j++)
+        {
+            if (adj_matrix[i][j] == EDGE_EXISTS)
+            {
+                for (int k = j + 1; k <= total_vertices; k++)
+                {
+                    if (adj_matrix[i][k] == EDGE_EXISTS && adj_matrix[j][k] == EDGE_EXISTS)
+                    {
+                        v1 = i;
+                        v2 = j;
+                        vn = k;
+                        foundation_found = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    if (!foundation_found)
+    {
+        return ERROR_GRAPH_NOT_PLANAR;
+    }
+
+    int *is_peeled = calloc(matrix_size, sizeof(int));
+    int *is_boundary = calloc(matrix_size, sizeof(int));
+
+    if (is_peeled == NULL || is_boundary == NULL)
+    {
+        free(is_peeled);
+        free(is_boundary);
+        return ERROR_POINTS_TO_NULL;
+    }
+    // Initialize the foundation
+    is_boundary[v1] = 1;
+    is_boundary[v2] = 1;
+    is_boundary[vn] = 1;
+
+    int current_order_index = total_vertices;
+
+    // Peel the peek
+    canonical_order[current_order_index] = vn; // start from the end
+    is_peeled[vn] = 1;
+    is_boundary[vn] = 0;
+    current_order_index--;
+
+    // Expose nodes underneath vn
+    for (int j = 1; j <= total_vertices; j++)
+    {
+        if (adj_matrix[vn][j] == EDGE_EXISTS && is_peeled[j] == 0)
+        {
+            is_boundary[j] = 1;
+        }
+    }
+
+    while (current_order_index > 2)
+    {
+        int peeled_a_node = 0;
+
+        for (int i = 1; i <= total_vertices; i++)
+        {
+            if (is_boundary[i] == 1 && i != v1 && i != v2)
+            {
+                int boundary_neighbors = 0;
+                for (int j = 1; j <= total_vertices; j++)
+                {
+                    if (adj_matrix[i][j] == EDGE_EXISTS && is_boundary[j] == 1)
+                    {
+                        boundary_neighbors++;
+                    }
+                }
+
+                if (boundary_neighbors == 2)
+                {
+                    canonical_order[current_order_index] = i;
+                    is_peeled[i] = 1;
+                    is_boundary[i] = 0;
+                    current_order_index--;
+
+                    for (int j = 1; j <= total_vertices; j++)
+                    {
+                        if (adj_matrix[i][j] == EDGE_EXISTS && is_peeled[j] == 0)
+                        {
+                            is_boundary[j] = 1;
+                        }
+                    }
+
+                    peeled_a_node = 1;
+                    break;
+                }
+            }
+        }
+
+        if (peeled_a_node == 0)
+        {
+            free(is_peeled);
+            free(is_boundary);
+            return ERROR_GRAPH_NOT_PLANAR;
+        }
+    }
+
+    canonical_order[1] = v1;
+    canonical_order[2] = v2;
+
+    free(is_peeled);
+    free(is_boundary);
+
+    return 0;
+}
+
 int triangulate_graph(const Edge *initial_graph, Node *output_graph)
 {
     // checking for the graphs to be allocated
@@ -225,6 +343,30 @@ int triangulate_graph(const Edge *initial_graph, Node *output_graph)
 
     free(visited);
     free(pathstack);
+
+    int *canonical_order = calloc(matrix_size, sizeof(int));
+
+    if (canonical_order == NULL)
+    {
+        for (int i = 0; i < matrix_size; i++)
+        {
+            free(adj_matrix[i]);
+        }
+        free(adj_matrix);
+        return ERROR_POINTS_TO_NULL;
+    }
+
+    int order_status = get_canonical_order(adj_matrix, matrix_size, total_vertices, canonical_order);
+    if (order_status != 0)
+    {
+        free(canonical_order);
+        for (int i = 0; i < matrix_size; i++)
+        {
+            free(adj_matrix[i]);
+        }
+        free(adj_matrix);
+        return order_status;
+    }
 
     // freeing memory
     for (int i = 0; i < matrix_size; i++)
