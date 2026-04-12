@@ -96,10 +96,19 @@ int create_output_file(enum file_output_type format, const Node *elements, char 
                 fprintf(f, "%u %.2f %.2f\n", current->node, current->x_axis, current->y_axis);
             }
             else if (format == BINARY) {
-                
-            }
-        }
+                char name_str[50];
+                sprintf(name_str, "%u", current->node); 
 
+                unsigned char name_length = (unsigned char)strlen(name_str);
+
+                fwrite(&name_length, sizeof(unsigned char), 1, f);
+                fwrite(name_str, sizeof(char), name_length, f);
+                fwrite(&current->x_axis, sizeof(double), 1, f);
+                fwrite(&current->y_axis, sizeof(double), 1, f);
+            }
+            current = current->next;
+        }
+        fclose(f);
 
     return 0;
 }
