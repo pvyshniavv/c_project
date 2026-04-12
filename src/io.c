@@ -25,7 +25,7 @@ int deserialize_file(char *filename, Edge *elements)
     return ERROR_NO_INPUT_FILE_PATH_WAS_GIVEN; //using error 20 from error_handler
 }
 
-
+    //we assume 'elements' is a temporary head
     Edge *current = elements;
 
     //setting temporary methods
@@ -75,10 +75,13 @@ int deserialize_file(char *filename, Edge *elements)
 
 int create_output_file(enum file_output_type format, const Node *elements, char *output_file_path)
 {
+    //checking if pointers are not empty 
     if(output_file_path== NULL || elements == NULL) {
-        return ERROR_INVALID_PARAMETER;
+        return ERROR_INVALID_PARAMETER; //using error 1 from error_handler
     }
 
+    //we need to open the file in different modes depending on the format 
+    //"w" is for writing, "wb" is for bibary writing
     FILE *f;
     if(format == TEXT) {
         f = fopen(output_file_path, "w");
@@ -86,29 +89,37 @@ int create_output_file(enum file_output_type format, const Node *elements, char 
             f = fopen(output_file_path, "wb");
         }
 
+
         if(f == NULL) {
+            //cannot open or create file
             return ERROR_CANNOT_OPEN_FILE;
         }
-
+        //we assume 'elements' is a temporary head
         const Node *current = elements->next;
         while(current != NULL) {
             if(format == TEXT) {
+                //simple fprintf for text format
                 fprintf(f, "%u %.2f %.2f\n", current->node, current->x_axis, current->y_axis);
             }
             else if (format == BINARY) {
+                //we have to save string length (1 byte), then string, then two doubles.
+                //but out struct has 'unsigned int node'. then we habe to conbert int to string first
                 char name_str[50];
-                sprintf(name_str, "%u", current->node); 
+        
+                sprintf(name_str, "%u", current->node); //converting number to text
 
                 unsigned char name_length = (unsigned char)strlen(name_str);
 
-                fwrite(&name_length, sizeof(unsigned char), 1, f);
-                fwrite(name_str, sizeof(char), name_length, f);
-                fwrite(&current->x_axis, sizeof(double), 1, f);
-                fwrite(&current->y_axis, sizeof(double), 1, f);
+                //writing binary data: &variable, size_of_element, count of elements, file name)
+                fwrite(&name_length, sizeof(unsigned char), 1, f);  //1 byte
+                fwrite(name_str, sizeof(char), name_length, f);     //string characters ASCII 
+                fwrite(&current->x_axis, sizeof(double), 1, f);     //8 bytes
+                fwrite(&current->y_axis, sizeof(double), 1, f);     //8 bytes
             }
-            current = current->next;
-        }
-        fclose(f);
 
-    return 0;
+            current = current->next; //move to the next node
+        }
+        fclose(f); //close file
+
+    return 0; //if everything ended succesfully 
 }
