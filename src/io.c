@@ -13,6 +13,7 @@
 
 int deserialize_file(char *filename, Edge *elements)
 {
+<<<<<<< HEAD
     //checking if pointers are not empty 
     if (filename == NULL || elements == NULL) {
         return ERROR_INVALID_PARAMETER; //using error 1 from error_handler
@@ -22,6 +23,8 @@ int deserialize_file(char *filename, Edge *elements)
     FILE *f = fopen( filename, "r");
     if(f == NULL) {
     return ERROR_CANNOT_OPEN_FILE ; //using error 4 from error_handler
+=======
+>>>>>>> a74b795b94bebe0488239b9f35a9ac821d6afbd5
 }
 
     //we assume 'elements' is a temporary head
