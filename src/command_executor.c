@@ -50,24 +50,43 @@ static Node* create_nodes_from_edges (Edge* edges_temp_head) {
     return nodes_head;
 }
 
+/**
+ * @brief Function executes terminal command
+ *
+ * @details this is the core algorithm selection of the program. It performs the following steps:
+ * 1. reads the graph data from the input file.
+ * 2. prepares the node structures.
+ * 3. routes the data to the appropriate mathematical algorithm chosen by the user.
+ * 4. saves the calculated layout to the output file.
+ * 5. safely frees all allocated memory.
+ * * @param cmd structure, containing terminal command parsed from user input
+ * @return 0 on success, or specific error's id on failure
+ */
 
 int execute_command(Command cmd)
 {
+
+    //step 1: initialize the temporary head for the edges list
         Edge* edges_list = (Edge*)malloc(sizeof(Edge));
     if(edges_list == NULL) {
         return ERROR_OUT_OF_MEMORY;
+    }
         edges_list->next = NULL;
 
 
+        //step 2: i/o module = reads data form input file
         int read_status = deserialize_file(cmd.input_file_path, edges_list);
         if(read_status != 0) {
             free(edges_list);
             return read_status;
         }
 
+        //step 3: prepare Node structures for algorithms
         Node *nodes_list = create_nodes_from_edges(edges_list);
         if(nodes_list == NULL) {
 
+
+            //free adges before exiting to prevent memory leaks
             Edge *curr_e = edges_list;
             while(curr_e != NULL) {
                 Edge *temp = curr_e;
@@ -77,6 +96,8 @@ int execute_command(Command cmd)
             return ERROR_OUT_OF_MEMORY;
         }
 
+
+        //step 4: algorithm selection
         switch (cmd.chosen_algorithm) {
             case FRUCHTERMAN:
             use_fruchterman_for_graph(edges_list->next, nodes_list->next);
@@ -85,18 +106,26 @@ int execute_command(Command cmd)
             case TRIANGULATION:
             use_euler_planarity_test(edges_list->next, nodes_list->next);
             break;
-
-
-
-            int write_status = create_output_file(cmd.input_file_path, nodes_list, cmd.output_file_path);
-
-
-
-            
-
-            
         }
-        
-    }
-    return 0;
-}
+
+            //step 5: i/o module = write the result to the output file
+            int write_status = create_output_file(cmd.chosen_format, nodes_list, cmd.output_file_path);
+
+            //memory cleanedup (freeing linked lists)
+            Edge *curr_e = edges_list;
+            while (curr_e != NULL) {
+                Edge *temp = curr_e;
+                curr_e = curr_e->next;
+                free(temp);
+            }
+
+            Node *curr_n = nodes_list;
+            while (curr_n != NULL) {
+                Node *temp = curr_n;
+                curr_n = curr_e->next;
+                free(temp);
+            }
+
+            //return thw result of the writing process
+            return write_status;
+        }
