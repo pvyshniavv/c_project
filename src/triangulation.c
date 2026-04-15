@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "graph.h"
 #include "triangulation.h"
 #include "error_handler.h"
@@ -367,6 +368,163 @@ int triangulate_graph(const Edge *initial_graph, Node *output_graph)
         free(adj_matrix);
         return order_status;
     }
+
+    int *x_coords = calloc(matrix_size, sizeof(int));
+    int *y_coords = calloc(matrix_size, sizeof(int));
+
+    int *left_contour = calloc(matrix_size, sizeof(int));
+    int *right_contour = calloc(matrix_size, sizeof(int));
+
+    int *shift_set = calloc(matrix_size, sizeof(int));
+
+    if (x_coords == NULL || y_coords == NULL || left_contour == NULL || right_contour == NULL || shift_set == NULL)
+    {
+        free(x_coords);
+        free(y_coords);
+        free(left_contour);
+        free(right_contour);
+        free(shift_set);
+        free(canonical_order);
+        for (int i = 0; i < matrix_size; i++)
+        {
+            free(adj_matrix[i]);
+        }
+        free(adj_matrix);
+        return ERROR_POINTS_TO_NULL;
+    }
+
+    int node1 = canonical_order[1];
+    int node2 = canonical_order[2];
+    int node3 = canonical_order[3];
+
+    x_coords[node1] = 0;
+    y_coords[node1] = 0;
+
+    x_coords[node2] = 2;
+    y_coords[node2] = 0;
+
+    x_coords[node3] = 1;
+    y_coords[node3] = 1;
+
+    right_contour[node1] = node3;
+    left_contour[node2] = node3;
+    left_contour[node3] = node1;
+    right_contour[node3] = node2;
+
+    shift_set[node1] = node1;
+    shift_set[node2] = node2;
+    shift_set[node3] = node3;
+
+    for (int i = 4; i <= total_vertices; i++)
+    {
+        int vk = canonical_order[i];
+        shift_set[vk] = vk;
+
+        int L = 0, R = 0;
+        int current_roof_node = node1;
+
+        while (current_roof_node != 0)
+        {
+            if (adj_matrix[vk][current_roof_node] == EDGE_EXISTS)
+            {
+                if (L == 0)
+                {
+                    L = current_roof_node;
+                }
+                R = current_roof_node;
+            }
+            current_roof_node = right_contour[current_roof_node];
+        }
+
+        int node_to_shift = R;
+        while (node_to_shift != 0)
+        {
+            for (int n = 1; n <= total_vertices; n++)
+            {
+                if (shift_set[n] == node_to_shift)
+                {
+                    x_coords[n] += 2;
+                }
+            }
+            node_to_shift = right_contour[node_to_shift];
+        }
+
+        node_to_shift = right_contour[L];
+        while (node_to_shift != R)
+        {
+            for (int n = 1; n <= total_vertices; n++)
+            {
+                if (shift_set[n] == node_to_shift)
+                {
+                    x_coords[n] += 1;
+                }
+            }
+            node_to_shift = right_contour[node_to_shift];
+        }
+
+        x_coords[vk] = (x_coords[L] + x_coords[R] + y_coords[R] - y_coords[L]) / 2;
+        y_coords[vk] = (x_coords[R] - x_coords[L] + y_coords[R] + y_coords[L]) / 2;
+
+        node_to_shift = right_contour[L];
+        while (node_to_shift != R)
+        {
+            for (int n = 1; n <= total_vertices; n++)
+            {
+                if (shift_set[n] == node_to_shift)
+                {
+                    shift_set[n] = vk;
+                }
+            }
+            node_to_shift = right_contour[node_to_shift];
+        }
+
+        right_contour[L] = vk;
+        left_contour[vk] = L;
+        right_contour[vk] = R;
+        left_contour[R] = vk;
+    }
+
+    Node *current_list_node = output_graph;
+
+    for (int i = 1; i <= total_vertices; i++)
+    {
+        current_list_node->node = i;
+        current_list_node->x_axis = (double)x_coords[i];
+        current_list_node->y_axis = (double)y_coords[i];
+
+        if (i < total_vertices)
+        {
+            current_list_node->next = malloc(sizeof(Node));
+
+            if (current_list_node->next == NULL)
+            {
+                free(x_coords);
+                free(y_coords);
+                free(left_contour);
+                free(right_contour);
+                free(shift_set);
+                free(canonical_order);
+                for (int j = 0; j < matrix_size; j++)
+                    free(adj_matrix[j]);
+                free(adj_matrix);
+
+                return ERROR_POINTS_TO_NULL;
+            }
+
+            current_list_node = current_list_node->next;
+        }
+        else
+        {
+            current_list_node->next = NULL;
+        }
+    }
+
+    free(x_coords);
+    free(y_coords);
+    free(left_contour);
+    free(right_contour);
+    free(shift_set);
+    free(canonical_order);
 
     // freeing memory
     for (int i = 0; i < matrix_size; i++)
