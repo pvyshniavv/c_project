@@ -6,6 +6,7 @@
 #include "error_handler.h"
 #include "triangulation.h"
 #include "fruchterman.h"
+#include "stdlib.h"
 
 /**
  * @brief helper function to generate a liked list of Nodes based on the max node id found in Edges.
@@ -122,7 +123,7 @@ int execute_command(Command cmd)
             Node *curr_n = nodes_list;
             while (curr_n != NULL) {
                 Node *temp = curr_n;
-                curr_n = curr_e->next;
+                curr_n = curr_n->next;
                 free(temp);
             }
 

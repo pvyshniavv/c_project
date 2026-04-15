@@ -2,6 +2,8 @@
 #include "graph.h"
 #include <math.h>
 #include "fruchterman.h"
+#include "stdlib.h"
+
 
 //additional function. evaluate the distance between two points on the ground
 static double calculate_distance(double x1, double x2, double y1, double y2) {

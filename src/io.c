@@ -3,6 +3,8 @@
 #include "graph.h"
 #include "io.h"
 #include "error_handler.h"
+#include "string.h"
+#include "stdlib.h"
 
 /**
  * @brief function checks if the file is valid
