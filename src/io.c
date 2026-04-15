@@ -2,6 +2,7 @@
 #include "command.h"
 #include "graph.h"
 #include "io.h"
+#include "error_handler.h"
 
 /**
  * @brief function checks if the file is valid
@@ -12,7 +13,6 @@
 
 int deserialize_file(char *filename, Edge *elements)
 {
-    return 0;
 }
 
 int create_output_file(enum file_output_type format, const Node *elements, char *output_file_path)

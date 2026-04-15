@@ -20,11 +20,15 @@
  * @brief Initializing Errors' IDs definition for functions that can fail.
  *
  */
-#define ERROR_INVALID_PARAMETER (1)              ///< Invalid argument passed.
-#define INVALID_ALGORITHM_TYPE (2)               ///< Invalid algorithm type passed.
-#define INITIALIZE_HELP (3)                      ///< User typed help.
+#define ERROR_INVALID_PARAMETER (1) ///< Invalid argument passed.
+#define INVALID_ALGORITHM_TYPE (2)  ///< Invalid algorithm type passed.
+#define INITIALIZE_HELP (3)         ///< User typed help.
+#define ERROR_POINTS_TO_NULL (4)
+
+#define ERROR_GRAPH_NOT_PLANAR (10)
 #define ERROR_NO_INPUT_FILE_PATH_WAS_GIVEN (20)  ///< User didn't pass input file's path to the program.
 #define ERROR_NO_OUTPUT_FILE_PATH_WAS_GIVEN (21) ///< User didn't pass output file's path to the program.
+#define FILE_DOES_NOT_EXIST (22)
 
 /**
  * @brief Function, which tells the program how to act in case if different types of error.
