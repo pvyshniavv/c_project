@@ -53,5 +53,50 @@ static Node* create_nodes_from_edges (Edge* edges_temp_head) {
 
 int execute_command(Command cmd)
 {
+        Edge* edges_list = (Edge*)malloc(sizeof(Edge));
+    if(edges_list == NULL) {
+        return ERROR_OUT_OF_MEMORY;
+        edges_list->next = NULL;
+
+
+        int read_status = deserialize_file(cmd.input_file_path, edges_list);
+        if(read_status != 0) {
+            free(edges_list);
+            return read_status;
+        }
+
+        Node *nodes_list = create_nodes_from_edges(edges_list);
+        if(nodes_list == NULL) {
+
+            Edge *curr_e = edges_list;
+            while(curr_e != NULL) {
+                Edge *temp = curr_e;
+                curr_e = curr_e->next;
+                free(temp);
+            }
+            return ERROR_OUT_OF_MEMORY;
+        }
+
+        switch (cmd.chosen_algorithm) {
+            case FRUCHTERMAN:
+            use_fruchterman_for_graph(edges_list->next, nodes_list->next);
+            break;
+
+            case TRIANGULATION:
+            use_euler_planarity_test(edges_list->next, nodes_list->next);
+            break;
+
+
+
+            int write_status = create_output_file(cmd.input_file_path, nodes_list, cmd.output_file_path);
+
+
+
+            
+
+            
+        }
+        
+    }
     return 0;
 }
