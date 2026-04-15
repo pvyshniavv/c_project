@@ -31,4 +31,16 @@ void handle_error(int error_id)
         printf("Cannot open or create file.\n");
         printf("If you dont know, how to use the program properly, please, type\n [-h\\--help] - to open short instructions");
     }
+    if(error_id == ERROR_EMPTY_FILE) 
+    {
+        printf("ERROR!\n");
+        printf("File was opened succesfully, but is empty. \n");
+        printf("If you dont know, how to use the program properly, please, type\n [-h\\--help] - to open short instructions");
+    }
+    if(error_id == ERROR_OUT_OF_MEMORY) 
+    {
+        printf("ERROR!\n");
+        printf("Memory allocation failed (malloc returned NULL). \n");
+        printf("If you dont know, how to use the program properly, please, type\n [-h\\--help] - to open short instructions");
+    }
 }

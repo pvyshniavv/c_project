@@ -24,6 +24,8 @@
 #define INVALID_ALGORITHM_TYPE (2)               ///< Invalid algorithm type passed.
 #define INITIALIZE_HELP (3)                      ///< User typed help.
 #define ERROR_CANNOT_OPEN_FILE (4)               ///< File cannot be opened or created. 
+#define ERROR_EMPTY_FILE (6)                     ///< File was opened succesfully, but is empty.
+#define ERROR_OUT_OF_MEMORY (7)                  ///< Memory allocation failed (malloc returned NULL).
 #define ERROR_NO_INPUT_FILE_PATH_WAS_GIVEN (20)  ///< User didn't pass input file's path to the program.
 #define ERROR_NO_OUTPUT_FILE_PATH_WAS_GIVEN (21) ///< User didn't pass output file's path to the program.
 

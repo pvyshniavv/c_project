@@ -3,7 +3,7 @@
 #include <math.h>
 #include "fruchterman.h"
 
-//additional function
+//additional function. evaluate the distance between two points on the ground
 static double calculate_distance(double x1, double x2, double y1, double y2) {
     return sqrt ((x1-x2) * (x1-x2) + (y1-y2) * (y1-y2));
 }
@@ -25,7 +25,7 @@ int use_fruchterman_for_graph(const Edge *initial_graph, Node *output_graph) {
     if (num_nodes == 0) return 0;
 
     //created temporary errays for faster calculations
-    double *x = (double *)calloc(num_nodes, sizeof(double));
+    double *x = (double *)calloc(num_nodes, sizeof(double)); //calloc for filling a new memory by zeros
     double *y = (double *)calloc(num_nodes, sizeof(double));
     double *dx = (double *)calloc(num_nodes, sizeof(double));
     double *dy = (double *)calloc(num_nodes, sizeof(double));
@@ -37,8 +37,8 @@ int use_fruchterman_for_graph(const Edge *initial_graph, Node *output_graph) {
     int iterations = 100;
 
     double area = width * height;
-    double k = sqrt(area / num_nodes);
-    double temperature = width / 10.0;
+    double k = sqrt(area / num_nodes); //disatance between two nodes
+    double temperature = width / 10.0; //max possible vertex movement in one step (starting at 80 pixels)
 
 
     //random inicialization starter positions 
@@ -58,12 +58,13 @@ int use_fruchterman_for_graph(const Edge *initial_graph, Node *output_graph) {
             dx[v] = 0.0;
             dy[v] = 0.0;
             for(int u = 0; u < num_nodes; u++) {
-            if(v == u) continue;
+            if(v == u) continue; //the node can't repulse itself
 
+            //we calculate the difference in the X and Y axes and the total distance
             double delta_x = x[v] - x[u];
             double delta_y = y[v] - y[u];
             double dist = calculate_distance(x[v], x[u], y[v], y[u]);
-            if(dist < 0.0001) dist = 0.0001;
+            if(dist < 0.0001) dist = 0.0001; //prevents division on 0
 
             double force = (k * k) / dist; //repulsive force by two nodes
             dx[v] += (delta_x / dist) * force; 
@@ -112,9 +113,9 @@ int use_fruchterman_for_graph(const Edge *initial_graph, Node *output_graph) {
             if (x[v] > width) x[v] = width;
             if (y[v] > height) y[v] = height;
             if (y[v] < 0.0) y[v] = 0.0;
-
-            temperature *= 0.95;
         }
+        
+        temperature *= 0.95;
         
         //the 5 step:  transfer calculated data back to the linked list
         curr_node = output_graph;

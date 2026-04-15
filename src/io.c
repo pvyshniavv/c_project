@@ -21,8 +21,7 @@ int deserialize_file(char *filename, Edge *elements)
     //opening file in a reading mode
     FILE *f = fopen( filename, "r");
     if(f == NULL) {
-    perror ("Brak pliku.");
-    return ERROR_NO_INPUT_FILE_PATH_WAS_GIVEN; //using error 20 from error_handler
+    return ERROR_CANNOT_OPEN_FILE ; //using error 4 from error_handler
 }
 
     //we assume 'elements' is a temporary head
@@ -46,7 +45,7 @@ int deserialize_file(char *filename, Edge *elements)
             Edge *new_edge = (Edge*)malloc(sizeof(Edge));
             if(new_edge == NULL) {
                 fclose(f);
-                return ERROR_INVALID_PARAMETER;
+                return ERROR_OUT_OF_MEMORY; ////using error 7 from error_handler
             }
 
             //coping the data to the new structure
@@ -81,7 +80,7 @@ int create_output_file(enum file_output_type format, const Node *elements, char 
     }
 
     //we need to open the file in different modes depending on the format 
-    //"w" is for writing, "wb" is for bibary writing
+    //"w" is for writing, "wb" is for binary writing
     FILE *f;
     if(format == TEXT) {
         f = fopen(output_file_path, "w");
@@ -92,9 +91,9 @@ int create_output_file(enum file_output_type format, const Node *elements, char 
 
         if(f == NULL) {
             //cannot open or create file
-            return ERROR_CANNOT_OPEN_FILE;
+            return ERROR_CANNOT_OPEN_FILE; //using error 4 from error_handler
         }
-        //we assume 'elements' is a temporary head
+        //we assume elements is a temporary head
         const Node *current = elements->next;
         while(current != NULL) {
             if(format == TEXT) {
