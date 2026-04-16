@@ -1,0 +1,87 @@
+\doxysection{src/\+io.c File Reference}
+\hypertarget{io_8c}{}\label{io_8c}\index{src/io.c@{src/io.c}}
+{\ttfamily \+\#include $<$stdio.\+h$>$}\newline
+{\ttfamily \+\#include "{}command.\+h"{}}\newline
+{\ttfamily \+\#include "{}graph.\+h"{}}\newline
+{\ttfamily \+\#include "{}io.\+h"{}}\newline
+{\ttfamily \+\#include "{}error\+\_\+handler.\+h"{}}\newline
+{\ttfamily \+\#include "{}string.\+h"{}}\newline
+{\ttfamily \+\#include "{}stdlib.\+h"{}}\newline
+Include dependency graph for io.\+c:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{io_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{io_8c_a7cd453f7e98f241ad41109d4470e7eae}{deserialize\+\_\+file}} (char \texorpdfstring{$\ast$}{*}filename, \doxymbox{\hyperlink{struct_edge}{Edge}} \texorpdfstring{$\ast$}{*}elements)
+\begin{DoxyCompactList}\small\item\em function checks if the file is valid \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{io_8c_a707fa813b0e22bc89a4559045c336e49}{create\+\_\+output\+\_\+file}} (enum \doxymbox{\hyperlink{command_8h_abd4995318b6eb78f03cc660836b0b0e8}{file\+\_\+output\+\_\+type}} format, const \doxymbox{\hyperlink{struct_node}{Node}} \texorpdfstring{$\ast$}{*}elements, char \texorpdfstring{$\ast$}{*}output\+\_\+file\+\_\+path)
+\begin{DoxyCompactList}\small\item\em Function creates an output file and saves data to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{io_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{io_8c_a707fa813b0e22bc89a4559045c336e49}\index{io.c@{io.c}!create\_output\_file@{create\_output\_file}}
+\index{create\_output\_file@{create\_output\_file}!io.c@{io.c}}
+\doxysubsubsection{\texorpdfstring{create\_output\_file()}{create\_output\_file()}}
+{\footnotesize\ttfamily \label{io_8c_a707fa813b0e22bc89a4559045c336e49} 
+int create\+\_\+output\+\_\+file (\begin{DoxyParamCaption}\item[{enum \doxymbox{\hyperlink{command_8h_abd4995318b6eb78f03cc660836b0b0e8}{file\+\_\+output\+\_\+type}}}]{format}{, }\item[{const \doxymbox{\hyperlink{struct_node}{Node}} \texorpdfstring{$\ast$}{*}}]{transformed\+\_\+graph}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{output\+\_\+file\+\_\+path}{}\end{DoxyParamCaption})}
+
+
+
+Function creates an output file and saves data to it. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em format} & desired format type of the output file. \\
+\hline
+{\em elements} & structure, containing data, which should be represented in the output file. \\
+\hline
+{\em new\+\_\+file} & file, which stores data. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or error\textquotesingle{}s id. 
+\end{DoxyReturn}
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{io_8c_a707fa813b0e22bc89a4559045c336e49_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{io_8c_a7cd453f7e98f241ad41109d4470e7eae}\index{io.c@{io.c}!deserialize\_file@{deserialize\_file}}
+\index{deserialize\_file@{deserialize\_file}!io.c@{io.c}}
+\doxysubsubsection{\texorpdfstring{deserialize\_file()}{deserialize\_file()}}
+{\footnotesize\ttfamily \label{io_8c_a7cd453f7e98f241ad41109d4470e7eae} 
+int deserialize\+\_\+file (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{\doxymbox{\hyperlink{struct_edge}{Edge}} \texorpdfstring{$\ast$}{*}}]{elements}{}\end{DoxyParamCaption})}
+
+
+
+function checks if the file is valid 
+
+Function opens file, checks validity (using check\+\_\+file function), reads data in the file and saves it.
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & name of the user\textquotesingle{}s file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the file is valid or error\textquotesingle{}s id 
+\end{DoxyReturn}
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{io_8c_a7cd453f7e98f241ad41109d4470e7eae_icgraph}
+\end{center}
+\end{figure}

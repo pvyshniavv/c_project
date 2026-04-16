@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['y_5faxis_0',['y_axis',['../struct_node.html#ad4dc9c4b078654e102f5fd7c0377c7e6',1,'Node']]]
+  ['start_5fnode_0',['start_node',['../struct_edge.html#a85171e1351d6e446a09990efd52125ad',1,'Edge']]],
+  ['starting_5fnode_1',['STARTING_NODE',['../triangulation_8c.html#a30873dbbcca23e07bebad8b4940a5256',1,'triangulation.c']]],
+  ['starting_5fparent_5fnode_2',['STARTING_PARENT_NODE',['../triangulation_8c.html#a80d7b37b6c89838086620eb393512e62',1,'triangulation.c']]]
 ];

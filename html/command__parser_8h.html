@@ -92,9 +92,31 @@ $(function(){initNavTree('command__parser_8h.html','',''); });
 </div><!--header-->
 <div class="contents">
 
-<p>Parse function, which gets data from the terminal.  
+<p>Parse function, which gets terminal command.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="command_8h_source.html">../include/command.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="command_8h_source.html">command.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for command_parser.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="command__parser_8h__incl.png" border="0" usemap="#ainclude_2command__parser_8h" loading="lazy" alt=""/></div>
+<map name="ainclude_2command__parser_8h" id="ainclude_2command__parser_8h">
+<area shape="rect" title="Parse function, which gets terminal command." alt="" coords="5,5,183,32"/>
+<area shape="rect" href="command_8h.html" title="Structure, which contain data gathered from terminal and enums, which contain a list of format types ..." alt="" coords="49,80,139,107"/>
+<area shape="poly" title=" " alt="" coords="96,31,97,65,91,63,92,35"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="command__parser_8h__dep__incl.png" border="0" usemap="#ainclude_2command__parser_8hdep" loading="lazy" alt=""/></div>
+<map name="ainclude_2command__parser_8hdep" id="ainclude_2command__parser_8hdep">
+<area shape="rect" title="Parse function, which gets terminal command." alt="" coords="64,5,242,32"/>
+<area shape="rect" href="command__parser_8c.html" title=" " alt="" coords="5,80,160,107"/>
+<area shape="poly" title=" " alt="" coords="133,42,96,82,93,78,128,44"/>
+<area shape="rect" href="main_8c.html" title=" " alt="" coords="184,80,266,107"/>
+<area shape="poly" title=" " alt="" coords="177,41,215,80,210,79,175,46"/>
+</map>
+</div>
 </div>
 <p><a href="command__parser_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -104,9 +126,9 @@ Functions</h2></td></tr>
 <tr class="memdesc:a9de9c0ba49b20e9ad715bbe1e5b95ff5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function scans command terminal for file's name, algorithm type and file output type.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Parse function, which gets data from the terminal. </p>
-<p>Function is being used to get initial data, that is necessary for program to work. </p><dl class="section attention"><dt>Attention</dt><dd>Program highly depends on order, in which arguments were typed in. Also it heavily depends on flags and the way user typed them. </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>To learn the way to properly type in data type <u>/program help</u> or read our user's manual </dd></dl>
+<div class="textblock"><p>Parse function, which gets terminal command. </p>
+<p>Function is being used to get initial data, that is necessary for the program to work. </p><dl class="section attention"><dt>Attention</dt><dd>Program highly depends on the order, in which arguments were typed in. Also it heavily depends on the flags and the way user typed them. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>To learn the way to properly type in data, type <u>/program help</u> or read our user's manual </dd></dl>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a9de9c0ba49b20e9ad715bbe1e5b95ff5" name="a9de9c0ba49b20e9ad715bbe1e5b95ff5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9de9c0ba49b20e9ad715bbe1e5b95ff5">&#9670;&#160;</a></span>parse_command()</h2>
@@ -135,7 +157,7 @@ Functions</h2></td></tr>
 <p>Function scans command terminal for file's name, algorithm type and file output type. </p>
 <p>In the process of scanning terminal function detects flags and process them.</p>
 <p>Valid input will look like this: ./name_of_the_program &lt;file_name&gt; -a &lt;algorithm_type&gt; -t/-b</p>
-<p>Flags meaning: -a - precedes &lt;algorithm_type&gt;. By default &lt;algorithm_type&gt; is triangulation. -t - output file has txt format. -b - output file has binary format. By default file has text format.</p>
+<p>Flags meaning: -a/&ndash;algorithm - precedes &lt;algorithm_type&gt;. By default &lt;algorithm_type&gt; is triangulation. -t/&ndash;text - output file has txt format. -b/&ndash;binary - output file has binary format. -h/&ndash;help - user's manual output -o/&ndash;output - precedes name/path to the output file By default the directory is the same where the program is located By default file has text format.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">argc</td><td>The number of input arguments. </td></tr>
@@ -145,6 +167,16 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 or error's id. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="command__parser_8h_a9de9c0ba49b20e9ad715bbe1e5b95ff5_icgraph.png" border="0" usemap="#acommand__parser_8h_a9de9c0ba49b20e9ad715bbe1e5b95ff5_icgraph" loading="lazy" alt=""/></div>
+<map name="acommand__parser_8h_a9de9c0ba49b20e9ad715bbe1e5b95ff5_icgraph" id="acommand__parser_8h_a9de9c0ba49b20e9ad715bbe1e5b95ff5_icgraph">
+<area shape="rect" title="Function scans command terminal for file&#39;s name, algorithm type and file output type." alt="" coords="103,5,220,32"/>
+<area shape="rect" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="84,19,55,21,55,16,89,18"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -161,7 +193,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>include</b></li><li class="navelem"><a href="command__parser_8h.html">command_parser.h</a></li>
+    <li class="navelem"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a href="command__parser_8h.html">command_parser.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
   </ul>
 </div>

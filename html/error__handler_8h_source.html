@@ -96,19 +96,32 @@ $(function(){initNavTree('error__handler_8h_source.html','',''); });
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#ifndef ERROR_HANDLER_H</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#define ERROR_HANDLER_H</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="error__handler_8h.html#a176960f93d11db6f58d10a6957a80f38">   24</a></span><span class="preprocessor">#define ERROR_INVALID_PARAMETER (1) </span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="error__handler_8h.html#a8fe83ac76edc595f6b98cd4a4127aed5">   25</a></span><span class="preprocessor">#define ERROR (2)                   </span><span class="preprocessor"></span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keywordtype">void</span> handle_error(<span class="keywordtype">int</span> error_id);</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="error__handler_8h.html#a176960f93d11db6f58d10a6957a80f38">   23</a></span><span class="preprocessor">#define ERROR_INVALID_PARAMETER (1) </span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="error__handler_8h.html#ab784ed637bd27d9d4a734ebea254abef">   24</a></span><span class="preprocessor">#define INVALID_ALGORITHM_TYPE (2)  </span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="error__handler_8h.html#accab7faeaf98e238ba641c456aec873e">   25</a></span><span class="preprocessor">#define INITIALIZE_HELP (3)         </span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="error__handler_8h.html#afcbdd74285ca9ac697fb3785cacf49c4">   27</a></span><span class="preprocessor">#define ERROR_OUT_OF_MEMORY (10)  </span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="error__handler_8h.html#a36bcf88d7daf212ebd3e54aa14e9d7ba">   28</a></span><span class="preprocessor">#define ERROR_POINTS_TO_NULL (11) </span></div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#endif </span><span class="comment">// ERROR_HANDLER_H</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="error__handler_8h.html#a16caa96705c44b54d176bc6a5d5df403">   30</a></span><span class="preprocessor">#define ERROR_CANNOT_OPEN_FILE (20)              </span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="error__handler_8h.html#a342e4aef974c38ede3a3e3868cd79e0d">   31</a></span><span class="preprocessor">#define ERROR_EMPTY_FILE (21)                    </span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="error__handler_8h.html#a1aaebc8336ea70dca0f6b38558d496e3">   32</a></span><span class="preprocessor">#define ERROR_NO_INPUT_FILE_PATH_WAS_GIVEN (22)  </span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="error__handler_8h.html#ae3ed12a33f02f5a5f38a27208d7a48e0">   33</a></span><span class="preprocessor">#define ERROR_NO_OUTPUT_FILE_PATH_WAS_GIVEN (23) </span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="error__handler_8h.html#a24bf3eeada04e097fea8e2937b79eb7a">   34</a></span><span class="preprocessor">#define FILE_DOES_NOT_EXIST (24)                 </span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="error__handler_8h.html#ac6642a3b0e18e8784bf3b8370bccb06e">   36</a></span><span class="preprocessor">#define ERROR_GRAPH_NOT_PLANAR (30) </span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keywordtype">void</span> <a class="code hl_function" href="error__handler_8h.html#a6701209b36cc1e8f1cbaafb8e82db5ee">handle_error</a>(<span class="keywordtype">int</span> error_id);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#endif </span><span class="comment">// ERROR_HANDLER_H</span></div>
+<div class="ttc" id="aerror__handler_8h_html_a6701209b36cc1e8f1cbaafb8e82db5ee"><div class="ttname"><a href="error__handler_8h.html#a6701209b36cc1e8f1cbaafb8e82db5ee">handle_error</a></div><div class="ttdeci">void handle_error(int error_id)</div><div class="ttdoc">Function, which tells the program how to act in case if different types of error.</div><div class="ttdef"><b>Definition</b> error_handler.c:4</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>include</b></li><li class="navelem"><a href="error__handler_8h.html">error_handler.h</a></li>
+    <li class="navelem"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a href="error__handler_8h.html">error_handler.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
   </ul>
 </div>
