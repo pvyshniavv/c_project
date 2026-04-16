@@ -2,10 +2,26 @@
 \hypertarget{command__parser_8h}{}\label{command__parser_8h}\index{include/command\_parser.h@{include/command\_parser.h}}
 
 
-Parse function, which gets data from the terminal.  
+Parse function, which gets terminal command.  
 
 
-{\ttfamily \+\#include "{}../\+include/\+command.\+h"{}}\newline
+{\ttfamily \+\#include "{}command.\+h"{}}\newline
+Include dependency graph for command\+\_\+parser.\+h:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=213pt]{command__parser_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=276pt]{command__parser_8h__dep__incl}
+\end{center}
+\end{figure}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -14,13 +30,13 @@ int \doxymbox{\hyperlink{command__parser_8h_a9de9c0ba49b20e9ad715bbe1e5b95ff5}{p
 
 
 \doxysubsection{Detailed Description}
-Parse function, which gets data from the terminal. 
+Parse function, which gets terminal command. 
 
-Function is being used to get initial data, that is necessary for program to work. \begin{DoxyAttention}{Attention}
-Program highly depends on order, in which arguments were typed in. Also it heavily depends on flags and the way user typed them. 
+Function is being used to get initial data, that is necessary for the program to work. \begin{DoxyAttention}{Attention}
+Program highly depends on the order, in which arguments were typed in. Also it heavily depends on the flags and the way user typed them. 
 \end{DoxyAttention}
 \begin{DoxyNote}{Note}
-To learn the way to properly type in data type \uline{/\+program help} or read our user\textquotesingle{}s manual 
+To learn the way to properly type in data, type \uline{/\+program help} or read our user\textquotesingle{}s manual 
 \end{DoxyNote}
 
 
@@ -41,7 +57,7 @@ In the process of scanning terminal function detects flags and process them.
 
 Valid input will look like this:\+ ./\+name\+\_\+of\+\_\+the\+\_\+program $<$file\+\_\+name$>$ -\/a $<$algorithm\+\_\+type$>$ -\/t/\+-\/b
 
-Flags meaning:\+ -\/a -\/ precedes $<$algorithm\+\_\+type$>$. By default $<$algorithm\+\_\+type$>$ is triangulation. -\/t -\/ output file has txt format. -\/b -\/ output file has binary format. By default file has text format.
+Flags meaning:\+ -\/a/\+--algorithm -\/ precedes $<$algorithm\+\_\+type$>$. By default $<$algorithm\+\_\+type$>$ is triangulation. -\/t/\+--text -\/ output file has txt format. -\/b/\+--binary -\/ output file has binary format. -\/h/\+--help -\/ user\textquotesingle{}s manual output -\/o/\+--output -\/ precedes name/\+path to the output file By default the directory is the same where the program is located By default file has text format.
 
 
 \begin{DoxyParams}{Parameters}
@@ -55,3 +71,11 @@ Flags meaning:\+ -\/a -\/ precedes $<$algorithm\+\_\+type$>$. By default $<$algo
 \begin{DoxyReturn}{Returns}
 0 or error\textquotesingle{}s id. 
 \end{DoxyReturn}
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=241pt]{command__parser_8h_a9de9c0ba49b20e9ad715bbe1e5b95ff5_icgraph}
+\end{center}
+\end{figure}

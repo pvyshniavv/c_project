@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['spectral_0',['SPECTRAL',['../command_8h.html#ac6768b485302681fa674deef6df58165ac7e239ecdda645a3aa707bab3f310ff7',1,'command.h']]],
-  ['start_5fnode_1',['start_node',['../struct_edge.html#a85171e1351d6e446a09990efd52125ad',1,'Edge']]]
+  ['next_0',['next',['../struct_edge.html#a6364279547b42e7fa3e418f44ec29f18',1,'Edge::next'],['../struct_node.html#af67b110ca1a258b793bf69d306929b22',1,'Node::next']]],
+  ['node_1',['Node',['../struct_node.html',1,'Node'],['../graph_8h.html#a3b09f37e675bcd48a01bf22155996872',1,'Node:&#160;graph.h']]],
+  ['node_2',['node',['../struct_node.html#ad8f2f55b042f51a4d27c08b6704d0790',1,'Node']]]
 ];

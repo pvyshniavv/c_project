@@ -95,17 +95,17 @@ $(function(){initNavTree('io_8h_source.html','',''); });
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#ifndef IO_H</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define IO_H</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="graph_8h.html">../include/graph.h</a>&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="graph_8h.html">graph.h</a>&quot;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keywordtype">int</span> <a class="code hl_function" href="io_8h.html#a7cd453f7e98f241ad41109d4470e7eae">deserialize_file</a>(<span class="keywordtype">char</span> *filename, <a class="code hl_struct" href="struct_edge.html">Edge</a> *elements);</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keywordtype">int</span> <a class="code hl_function" href="io_8h.html#a2eaeaae36c481204f0b83f779a95f237">deserialize_file</a>(<span class="keywordtype">char</span> *filename, <a class="code hl_struct" href="struct_edge.html">Edge</a> *empty_graph);</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="io_8h.html#a39fd15eb5bb32a61a840a3b6c0ba7a02">   28</a></span>FILE *<a class="code hl_function" href="io_8h.html#a39fd15eb5bb32a61a840a3b6c0ba7a02">create_output_file</a>(<span class="keyword">enum</span> <a class="code hl_enumeration" href="command_8h.html#abd4995318b6eb78f03cc660836b0b0e8">file_output_type</a> format, <a class="code hl_struct" href="struct_node.html">Node</a> elements);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#endif </span><span class="comment">// IO_H</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keywordtype">int</span> <a class="code hl_function" href="io_8h.html#addf4cadf3aecd7e73a2392e61c9ab4c9">create_output_file</a>(<span class="keyword">enum</span> <a class="code hl_enumeration" href="command_8h.html#abd4995318b6eb78f03cc660836b0b0e8">file_output_type</a> format, <span class="keyword">const</span> <a class="code hl_struct" href="struct_node.html">Node</a> *transformed_graph, <span class="keywordtype">char</span> *output_file_path);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#endif </span><span class="comment">// IO_H</span></div>
 <div class="ttc" id="acommand_8h_html_abd4995318b6eb78f03cc660836b0b0e8"><div class="ttname"><a href="command_8h.html#abd4995318b6eb78f03cc660836b0b0e8">file_output_type</a></div><div class="ttdeci">file_output_type</div><div class="ttdoc">Set of file format types.</div><div class="ttdef"><b>Definition</b> command.h:29</div></div>
 <div class="ttc" id="agraph_8h_html"><div class="ttname"><a href="graph_8h.html">graph.h</a></div><div class="ttdoc">Structures, which contain graph broken down into parts.</div></div>
-<div class="ttc" id="aio_8h_html_a39fd15eb5bb32a61a840a3b6c0ba7a02"><div class="ttname"><a href="io_8h.html#a39fd15eb5bb32a61a840a3b6c0ba7a02">create_output_file</a></div><div class="ttdeci">FILE * create_output_file(enum file_output_type format, Node elements)</div><div class="ttdoc">Create an output file.</div></div>
-<div class="ttc" id="aio_8h_html_a7cd453f7e98f241ad41109d4470e7eae"><div class="ttname"><a href="io_8h.html#a7cd453f7e98f241ad41109d4470e7eae">deserialize_file</a></div><div class="ttdeci">int deserialize_file(char *filename, Edge *elements)</div><div class="ttdoc">Function opens file, checks validity (using check_file function), reads data in the file and saves it...</div><div class="ttdef"><b>Definition</b> io.c:16</div></div>
+<div class="ttc" id="aio_8h_html_a2eaeaae36c481204f0b83f779a95f237"><div class="ttname"><a href="io_8h.html#a2eaeaae36c481204f0b83f779a95f237">deserialize_file</a></div><div class="ttdeci">int deserialize_file(char *filename, Edge *empty_graph)</div><div class="ttdoc">Function opens file, checks validity (using check_file function), reads data in the file and saves it...</div><div class="ttdef"><b>Definition</b> io.c:16</div></div>
+<div class="ttc" id="aio_8h_html_addf4cadf3aecd7e73a2392e61c9ab4c9"><div class="ttname"><a href="io_8h.html#addf4cadf3aecd7e73a2392e61c9ab4c9">create_output_file</a></div><div class="ttdeci">int create_output_file(enum file_output_type format, const Node *transformed_graph, char *output_file_path)</div><div class="ttdoc">Function creates an output file and saves data to it.</div><div class="ttdef"><b>Definition</b> io.c:98</div></div>
 <div class="ttc" id="astruct_edge_html"><div class="ttname"><a href="struct_edge.html">Edge</a></div><div class="ttdoc">Structure, which contains graph partitioned into edges.</div><div class="ttdef"><b>Definition</b> graph.h:19</div></div>
 <div class="ttc" id="astruct_node_html"><div class="ttname"><a href="struct_node.html">Node</a></div><div class="ttdoc">Structure, which contains graph partitioned into vertices.</div><div class="ttdef"><b>Definition</b> graph.h:32</div></div>
 </div><!-- fragment --></div><!-- contents -->
@@ -114,7 +114,7 @@ $(function(){initNavTree('io_8h_source.html','',''); });
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>include</b></li><li class="navelem"><a href="io_8h.html">io.h</a></li>
+    <li class="navelem"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a href="io_8h.html">io.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
   </ul>
 </div>

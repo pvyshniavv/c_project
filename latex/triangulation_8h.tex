@@ -1,0 +1,67 @@
+\doxysection{include/\+triangulation.h File Reference}
+\hypertarget{triangulation_8h}{}\label{triangulation_8h}\index{include/triangulation.h@{include/triangulation.h}}
+
+
+Mathematical transformation of a graph with triangulation algorithm.  
+
+
+{\ttfamily \+\#include "{}graph.\+h"{}}\newline
+Include dependency graph for triangulation.\+h:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=191pt]{triangulation_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=318pt]{triangulation_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{triangulation_8h_a57f6f1eb22c2d38419eba920d56e019f}{triangulate\+\_\+graph}} (const \doxymbox{\hyperlink{struct_edge}{Edge}} \texorpdfstring{$\ast$}{*}initial\+\_\+graph, \doxymbox{\hyperlink{struct_node}{Node}} \texorpdfstring{$\ast$}{*}output\+\_\+graph)
+\begin{DoxyCompactList}\small\item\em Function transforms graph using "{}\+Planar Straight-\/\+Line Drawing algorithm"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Mathematical transformation of a graph with triangulation algorithm. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{triangulation_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{triangulation_8h_a57f6f1eb22c2d38419eba920d56e019f}\index{triangulation.h@{triangulation.h}!triangulate\_graph@{triangulate\_graph}}
+\index{triangulate\_graph@{triangulate\_graph}!triangulation.h@{triangulation.h}}
+\doxysubsubsection{\texorpdfstring{triangulate\_graph()}{triangulate\_graph()}}
+{\footnotesize\ttfamily \label{triangulation_8h_a57f6f1eb22c2d38419eba920d56e019f} 
+int triangulate\+\_\+graph (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_edge}{Edge}} \texorpdfstring{$\ast$}{*}}]{initial\+\_\+graph}{, }\item[{\doxymbox{\hyperlink{struct_node}{Node}} \texorpdfstring{$\ast$}{*}}]{output\+\_\+graph}{}\end{DoxyParamCaption})}
+
+
+
+Function transforms graph using "{}\+Planar Straight-\/\+Line Drawing algorithm"{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em initial\+\_\+graph} & strucute, which contains original graph. \\
+\hline
+{\em output\+\_\+graph} & structure, into which transformed graph will be saved. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or error\textquotesingle{}s id. 
+\end{DoxyReturn}
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{triangulation_8h_a57f6f1eb22c2d38419eba920d56e019f_icgraph}
+\end{center}
+\end{figure}

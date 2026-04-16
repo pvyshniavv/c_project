@@ -1,0 +1,9 @@
+<map id="include/command_executor.h" name="include/command_executor.h">
+<area shape="rect" id="Node000001" title="Function, which executes command from the terminal." alt="" coords="5,5,197,32"/>
+<area shape="rect" id="Node000002" href="$command_8h.html" title="Structure, which contain data gathered from terminal and enums, which contain a list of format types ..." alt="" coords="12,80,102,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,35,75,68,70,65,95,30"/>
+<area shape="rect" id="Node000003" href="$io_8h.html" title="All file manipulations are done in here." alt="" coords="125,80,168,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="110,30,133,66,128,67,108,35"/>
+<area shape="rect" id="Node000004" href="$graph_8h.html" title="Structures, which contain graph broken down into parts." alt="" coords="114,155,178,181"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="148,105,149,140,144,138,145,109"/>
+</map>
