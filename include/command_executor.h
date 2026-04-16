@@ -18,6 +18,6 @@
  * @param cmd structure, containing terminal command
  * @return 0 or error's id
  */
-int execute_command(Command cmd);
+int execute_command(Command cmd, Edge *edges_dummy_head, Node *nodes_dummy_head);
 
 #endif // COMMAND_EXECUTOR_H

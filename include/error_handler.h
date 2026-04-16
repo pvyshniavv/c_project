@@ -20,21 +20,20 @@
  * @brief Initializing Errors' IDs definition for functions that can fail.
  *
  */
-#define ERROR_INVALID_PARAMETER (1)              ///< Invalid argument passed.
-#define INVALID_ALGORITHM_TYPE (2)               ///< Invalid algorithm type passed.
-#define INITIALIZE_HELP (3)                      ///< User typed help.
-#define ERROR_CANNOT_OPEN_FILE (4)               ///< File cannot be opened or created. 
-#define ERROR_EMPTY_FILE (6)                     ///< File was opened succesfully, but is empty.
-#define ERROR_OUT_OF_MEMORY (7)                  ///< Memory allocation failed (malloc returned NULL).
 #define ERROR_INVALID_PARAMETER (1) ///< Invalid argument passed.
 #define INVALID_ALGORITHM_TYPE (2)  ///< Invalid algorithm type passed.
 #define INITIALIZE_HELP (3)         ///< User typed help.
-#define ERROR_POINTS_TO_NULL (4)
 
-#define ERROR_GRAPH_NOT_PLANAR (10)
-#define ERROR_NO_INPUT_FILE_PATH_WAS_GIVEN (20)  ///< User didn't pass input file's path to the program.
-#define ERROR_NO_OUTPUT_FILE_PATH_WAS_GIVEN (21) ///< User didn't pass output file's path to the program.
-#define FILE_DOES_NOT_EXIST (22)
+#define ERROR_OUT_OF_MEMORY (10)  ///< Memory allocation failed (malloc returned NULL).
+#define ERROR_POINTS_TO_NULL (11) ///< Memory allocation failed (malloc returned NULL).
+
+#define ERROR_CANNOT_OPEN_FILE (20)              ///< File cannot be opened or created.
+#define ERROR_EMPTY_FILE (21)                    ///< File was opened succesfully, but is empty.
+#define ERROR_NO_INPUT_FILE_PATH_WAS_GIVEN (22)  ///< User didn't pass input file's path to the program.
+#define ERROR_NO_OUTPUT_FILE_PATH_WAS_GIVEN (23) ///< User didn't pass output file's path to the program.
+#define FILE_DOES_NOT_EXIST (24)                 ///< File doesn't exist
+
+#define ERROR_GRAPH_NOT_PLANAR (30) ///< Input graph is not planar
 
 /**
  * @brief Function, which tells the program how to act in case if different types of error.

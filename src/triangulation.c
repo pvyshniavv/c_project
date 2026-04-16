@@ -253,6 +253,8 @@ static int get_canonical_order(int **adj_matrix, int matrix_size, int total_vert
 
 int triangulate_graph(const Edge *initial_graph, Node *output_graph)
 {
+    printf("[TRIANGULATION] Starting triangulation process...\n");
+
     // checking for the graphs to be allocated
     if (initial_graph == NULL || output_graph == NULL)
     {
@@ -264,6 +266,8 @@ int triangulate_graph(const Edge *initial_graph, Node *output_graph)
     unsigned int total_vertices = max_node_id;
 
     unsigned int matrix_size = total_vertices + 1; // increasing size for indexing to start from 1
+
+    printf("[TRIANGULATION] Creating adjacency matrix...\n");
 
     // allocating memory for the adjacency matrix
     int **adj_matrix = malloc(matrix_size * sizeof(int *));
@@ -286,7 +290,11 @@ int triangulate_graph(const Edge *initial_graph, Node *output_graph)
         }
     }
 
+    printf("[TRIANGULATION] Matrix was successfully created!\n");
+
     const Edge *current_edge = initial_graph;
+
+    printf("[TRIANGULATION] Filling in the data...\n");
 
     // populating matrix
     while (current_edge != NULL)
@@ -299,6 +307,8 @@ int triangulate_graph(const Edge *initial_graph, Node *output_graph)
 
         current_edge = current_edge->next;
     }
+
+    printf("[TRIANGULATION] Testing graph's planarity...\n");
 
     // check if the graph has 3 or more vertices to then check if it's a planar graph
     // graph with less then 3 vertices if always planar
@@ -340,6 +350,8 @@ int triangulate_graph(const Edge *initial_graph, Node *output_graph)
 
     unsigned int depth = 0;
 
+    printf("[TRIANGULATION] Tringulating graph...\n");
+
     dfs_find_holes(STARTING_NODE, STARTING_PARENT_NODE, adj_matrix, visited, matrix_size, pathstack, depth);
 
     free(visited);
@@ -356,6 +368,8 @@ int triangulate_graph(const Edge *initial_graph, Node *output_graph)
         free(adj_matrix);
         return ERROR_POINTS_TO_NULL;
     }
+
+    printf("[TRIANGULATION] Arranging nodes...\n");
 
     int order_status = get_canonical_order(adj_matrix, matrix_size, total_vertices, canonical_order);
     if (order_status != 0)
@@ -414,6 +428,8 @@ int triangulate_graph(const Edge *initial_graph, Node *output_graph)
     shift_set[node1] = node1;
     shift_set[node2] = node2;
     shift_set[node3] = node3;
+
+    printf("[TRIANGULATION] Assigning coordinates...\n");
 
     for (int i = 4; i <= total_vertices; i++)
     {
@@ -484,6 +500,9 @@ int triangulate_graph(const Edge *initial_graph, Node *output_graph)
         left_contour[R] = vk;
     }
 
+    printf("[TRIANGULATION] Coordinates were successfully processed!\n\n");
+    printf("[TRIANGULATION] Structuring everything into node list...\n");
+
     Node *current_list_node = output_graph;
 
     for (int i = 1; i <= total_vertices; i++)
@@ -492,32 +511,11 @@ int triangulate_graph(const Edge *initial_graph, Node *output_graph)
         current_list_node->x_axis = (double)x_coords[i];
         current_list_node->y_axis = (double)y_coords[i];
 
-        if (i < total_vertices)
-        {
-            current_list_node->next = malloc(sizeof(Node));
-
-            if (current_list_node->next == NULL)
-            {
-                free(x_coords);
-                free(y_coords);
-                free(left_contour);
-                free(right_contour);
-                free(shift_set);
-                free(canonical_order);
-                for (int j = 0; j < matrix_size; j++)
-                    free(adj_matrix[j]);
-                free(adj_matrix);
-
-                return ERROR_POINTS_TO_NULL;
-            }
-
-            current_list_node = current_list_node->next;
-        }
-        else
-        {
-            current_list_node->next = NULL;
-        }
+        current_list_node = current_list_node->next;
     }
+
+    printf("[TRIANGULATION] Success!\n");
+    printf("[TRIANGULATION] Final touches...\n");
 
     free(x_coords);
     free(y_coords);
@@ -532,6 +530,8 @@ int triangulate_graph(const Edge *initial_graph, Node *output_graph)
         free(adj_matrix[i]);
     }
     free(adj_matrix);
+
+    printf("[TRIANGULATION] Graph was successfully traingulated!\n\n");
 
     return 0;
 }
