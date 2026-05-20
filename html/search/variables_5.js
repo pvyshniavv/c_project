@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['weight_0',['weight',['../struct_edge.html#a6d0148402e635354c03a151c77fcbdd8',1,'Edge']]]
+  ['start_5fnode_0',['start_node',['../struct_edge.html#a85171e1351d6e446a09990efd52125ad',1,'Edge']]]
 ];

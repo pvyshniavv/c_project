@@ -94,54 +94,99 @@ $(function(){initNavTree('io_8h.html','',''); });
 
 <p>All file manipulations are done in here.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="graph_8h_source.html">../include/graph.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="graph_8h_source.html">graph.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for io.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="io_8h__incl.png" border="0" usemap="#ainclude_2io_8h" loading="lazy" alt=""/></div>
+<map name="ainclude_2io_8h" id="ainclude_2io_8h">
+<area shape="rect" title="All file manipulations are done in here." alt="" coords="5,5,93,32"/>
+<area shape="rect" href="graph_8h.html" title="Structures, which contain graph broken down into parts." alt="" coords="17,80,81,107"/>
+<area shape="poly" title=" " alt="" coords="51,30,52,65,46,64,47,35"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="io_8h__dep__incl.png" border="0" usemap="#ainclude_2io_8hdep" loading="lazy" alt=""/></div>
+<map name="ainclude_2io_8hdep" id="ainclude_2io_8hdep">
+<area shape="rect" title="All file manipulations are done in here." alt="" coords="179,5,266,32"/>
+<area shape="rect" href="command__executor_8h.html" title="Function, which executes command from the terminal." alt="" coords="127,80,318,107"/>
+<area shape="poly" title=" " alt="" coords="224,46,225,81,220,78,221,50"/>
+<area shape="rect" href="command__executor_8c.html" title=" " alt="" coords="5,155,174,181"/>
+<area shape="poly" title=" " alt="" coords="169,40,143,58,117,82,106,99,99,119,93,155,88,153,94,118,101,97,113,78,139,54,173,37"/>
+<area shape="rect" href="io_8c.html" title=" " alt="" coords="343,80,407,107"/>
+<area shape="poly" title=" " alt="" coords="263,36,351,79,346,80,263,42"/>
+<area shape="poly" title=" " alt="" coords="189,114,114,156,112,152,184,114"/>
+<area shape="rect" href="main_8c.html" title=" " alt="" coords="198,155,280,181"/>
+<area shape="poly" title=" " alt="" coords="231,120,238,155,234,153,227,124"/>
+</map>
+</div>
 </div>
 <p><a href="io_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a7cd453f7e98f241ad41109d4470e7eae" id="r_a7cd453f7e98f241ad41109d4470e7eae"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a7cd453f7e98f241ad41109d4470e7eae">deserialize_file</a> (char *filename, <a class="el" href="struct_edge.html">Edge</a> *elements)</td></tr>
-<tr class="memdesc:a7cd453f7e98f241ad41109d4470e7eae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function opens file, checks validity (using check_file function), reads data in the file and saves it.  <br /></td></tr>
-<tr class="memitem:a39fd15eb5bb32a61a840a3b6c0ba7a02" id="r_a39fd15eb5bb32a61a840a3b6c0ba7a02"><td class="memItemLeft">FILE *&#160;</td><td class="memItemRight"><a class="el" href="#a39fd15eb5bb32a61a840a3b6c0ba7a02">create_output_file</a> (enum <a class="el" href="command_8h.html#abd4995318b6eb78f03cc660836b0b0e8">file_output_type</a> format, <a class="el" href="struct_node.html">Node</a> elements)</td></tr>
-<tr class="memdesc:a39fd15eb5bb32a61a840a3b6c0ba7a02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an output file.  <br /></td></tr>
+<tr class="memitem:a2eaeaae36c481204f0b83f779a95f237" id="r_a2eaeaae36c481204f0b83f779a95f237"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a2eaeaae36c481204f0b83f779a95f237">deserialize_file</a> (char *filename, <a class="el" href="struct_edge.html">Edge</a> *empty_graph)</td></tr>
+<tr class="memdesc:a2eaeaae36c481204f0b83f779a95f237"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function opens file, checks validity (using check_file function), reads data in the file and saves it.  <br /></td></tr>
+<tr class="memitem:addf4cadf3aecd7e73a2392e61c9ab4c9" id="r_addf4cadf3aecd7e73a2392e61c9ab4c9"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#addf4cadf3aecd7e73a2392e61c9ab4c9">create_output_file</a> (enum <a class="el" href="command_8h.html#abd4995318b6eb78f03cc660836b0b0e8">file_output_type</a> format, const <a class="el" href="struct_node.html">Node</a> *transformed_graph, char *output_file_path)</td></tr>
+<tr class="memdesc:addf4cadf3aecd7e73a2392e61c9ab4c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function creates an output file and saves data to it.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>All file manipulations are done in here. </p>
 <p>Function for file deserialization and function for creating output file. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
-<a id="a39fd15eb5bb32a61a840a3b6c0ba7a02" name="a39fd15eb5bb32a61a840a3b6c0ba7a02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a39fd15eb5bb32a61a840a3b6c0ba7a02">&#9670;&#160;</a></span>create_output_file()</h2>
+<a id="addf4cadf3aecd7e73a2392e61c9ab4c9" name="addf4cadf3aecd7e73a2392e61c9ab4c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addf4cadf3aecd7e73a2392e61c9ab4c9">&#9670;&#160;</a></span>create_output_file()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">FILE * create_output_file </td>
+          <td class="memname">int create_output_file </td>
           <td>(</td>
           <td class="paramtype">enum <a class="el" href="command_8h.html#abd4995318b6eb78f03cc660836b0b0e8">file_output_type</a></td>          <td class="paramname"><span class="paramname"><em>format</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="struct_node.html">Node</a></td>          <td class="paramname"><span class="paramname"><em>elements</em></span>&#160;)</td>
+          <td class="paramtype">const <a class="el" href="struct_node.html">Node</a> *</td>          <td class="paramname"><span class="paramname"><em>transformed_graph</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *</td>          <td class="paramname"><span class="paramname"><em>output_file_path</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Create an output file. </p>
+<p>Function creates an output file and saves data to it. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">format</td><td>desired format type of the output file. </td></tr>
-    <tr><td class="paramname">elements</td><td>structure, containing data, which should be represented in the output file </td></tr>
+    <tr><td class="paramname">elements</td><td>structure, containing data, which should be represented in the output file. </td></tr>
+    <tr><td class="paramname">new_file</td><td>file, which stores data. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>File containing graph with coordinates. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>0 or error's id. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="io_8h_addf4cadf3aecd7e73a2392e61c9ab4c9_icgraph.png" border="0" usemap="#aio_8h_addf4cadf3aecd7e73a2392e61c9ab4c9_icgraph" loading="lazy" alt=""/></div>
+<map name="aio_8h_addf4cadf3aecd7e73a2392e61c9ab4c9_icgraph" id="aio_8h_addf4cadf3aecd7e73a2392e61c9ab4c9_icgraph">
+<area shape="rect" title="Function creates an output file and saves data to it." alt="" coords="282,5,406,32"/>
+<area shape="rect" href="command__executor_8c.html#aff15f670a3e9f65dae8a2481aabd6775" title="Function executes terminal command." alt="" coords="103,5,234,32"/>
+<area shape="poly" title=" " alt="" coords="264,19,234,21,234,16,269,19"/>
+<area shape="rect" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="a7cd453f7e98f241ad41109d4470e7eae" name="a7cd453f7e98f241ad41109d4470e7eae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7cd453f7e98f241ad41109d4470e7eae">&#9670;&#160;</a></span>deserialize_file()</h2>
+<a id="a2eaeaae36c481204f0b83f779a95f237" name="a2eaeaae36c481204f0b83f779a95f237"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2eaeaae36c481204f0b83f779a95f237">&#9670;&#160;</a></span>deserialize_file()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -167,7 +212,27 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>0 or error's id. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>0 or error's id.</dd></dl>
+<p>Function opens file, checks validity (using check_file function), reads data in the file and saves it.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>name of the user's file </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if the file is valid or error's id </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="io_8h_a2eaeaae36c481204f0b83f779a95f237_icgraph.png" border="0" usemap="#aio_8h_a2eaeaae36c481204f0b83f779a95f237_icgraph" loading="lazy" alt=""/></div>
+<map name="aio_8h_a2eaeaae36c481204f0b83f779a95f237_icgraph" id="aio_8h_a2eaeaae36c481204f0b83f779a95f237_icgraph">
+<area shape="rect" title="Function opens file, checks validity (using check_file function), reads data in the file and saves it..." alt="" coords="282,5,389,32"/>
+<area shape="rect" href="command__executor_8c.html#aff15f670a3e9f65dae8a2481aabd6775" title="Function executes terminal command." alt="" coords="103,5,234,32"/>
+<area shape="poly" title=" " alt="" coords="264,19,234,21,234,16,269,19"/>
+<area shape="rect" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -184,7 +249,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>include</b></li><li class="navelem"><a href="io_8h.html">io.h</a></li>
+    <li class="navelem"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a href="io_8h.html">io.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
   </ul>
 </div>

@@ -1,0 +1,94 @@
+\doxysection{src/\+triangulation.c File Reference}
+\hypertarget{triangulation_8c}{}\label{triangulation_8c}\index{src/triangulation.c@{src/triangulation.c}}
+{\ttfamily \+\#include $<$stdio.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \+\#include "{}graph.\+h"{}}\newline
+{\ttfamily \+\#include "{}triangulation.\+h"{}}\newline
+{\ttfamily \+\#include "{}error\+\_\+handler.\+h"{}}\newline
+Include dependency graph for triangulation.\+c:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{triangulation_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{triangulation_8c_a4eaaa8719507911c6343154e9d633a4c}{EDGE\+\_\+\+EXISTS}}~(1)
+\item 
+\+\#define \doxymbox{\hyperlink{triangulation_8c_a28615ad40e5d11edaefd903c02206f6d}{VISITED}}~(1)
+\item 
+\+\#define \doxymbox{\hyperlink{triangulation_8c_a30873dbbcca23e07bebad8b4940a5256}{STARTING\+\_\+\+NODE}}~(1)
+\item 
+\+\#define \doxymbox{\hyperlink{triangulation_8c_a80d7b37b6c89838086620eb393512e62}{STARTING\+\_\+\+PARENT\+\_\+\+NODE}}~(-\/1)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{triangulation_8c_a57f6f1eb22c2d38419eba920d56e019f}{triangulate\+\_\+graph}} (const \doxymbox{\hyperlink{struct_edge}{Edge}} \texorpdfstring{$\ast$}{*}initial\+\_\+graph, \doxymbox{\hyperlink{struct_node}{Node}} \texorpdfstring{$\ast$}{*}output\+\_\+graph)
+\begin{DoxyCompactList}\small\item\em Function transforms graph using "{}\+Planar Straight-\/\+Line Drawing algorithm"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{triangulation_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{triangulation_8c_a4eaaa8719507911c6343154e9d633a4c}\index{triangulation.c@{triangulation.c}!EDGE\_EXISTS@{EDGE\_EXISTS}}
+\index{EDGE\_EXISTS@{EDGE\_EXISTS}!triangulation.c@{triangulation.c}}
+\doxysubsubsection{\texorpdfstring{EDGE\_EXISTS}{EDGE\_EXISTS}}
+{\footnotesize\ttfamily \label{triangulation_8c_a4eaaa8719507911c6343154e9d633a4c} 
+\+\#define EDGE\+\_\+\+EXISTS~(1)}
+
+\Hypertarget{triangulation_8c_a30873dbbcca23e07bebad8b4940a5256}\index{triangulation.c@{triangulation.c}!STARTING\_NODE@{STARTING\_NODE}}
+\index{STARTING\_NODE@{STARTING\_NODE}!triangulation.c@{triangulation.c}}
+\doxysubsubsection{\texorpdfstring{STARTING\_NODE}{STARTING\_NODE}}
+{\footnotesize\ttfamily \label{triangulation_8c_a30873dbbcca23e07bebad8b4940a5256} 
+\+\#define STARTING\+\_\+\+NODE~(1)}
+
+\Hypertarget{triangulation_8c_a80d7b37b6c89838086620eb393512e62}\index{triangulation.c@{triangulation.c}!STARTING\_PARENT\_NODE@{STARTING\_PARENT\_NODE}}
+\index{STARTING\_PARENT\_NODE@{STARTING\_PARENT\_NODE}!triangulation.c@{triangulation.c}}
+\doxysubsubsection{\texorpdfstring{STARTING\_PARENT\_NODE}{STARTING\_PARENT\_NODE}}
+{\footnotesize\ttfamily \label{triangulation_8c_a80d7b37b6c89838086620eb393512e62} 
+\+\#define STARTING\+\_\+\+PARENT\+\_\+\+NODE~(-\/1)}
+
+\Hypertarget{triangulation_8c_a28615ad40e5d11edaefd903c02206f6d}\index{triangulation.c@{triangulation.c}!VISITED@{VISITED}}
+\index{VISITED@{VISITED}!triangulation.c@{triangulation.c}}
+\doxysubsubsection{\texorpdfstring{VISITED}{VISITED}}
+{\footnotesize\ttfamily \label{triangulation_8c_a28615ad40e5d11edaefd903c02206f6d} 
+\+\#define VISITED~(1)}
+
+
+
+\label{doc-func-members}
+\Hypertarget{triangulation_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{triangulation_8c_a57f6f1eb22c2d38419eba920d56e019f}\index{triangulation.c@{triangulation.c}!triangulate\_graph@{triangulate\_graph}}
+\index{triangulate\_graph@{triangulate\_graph}!triangulation.c@{triangulation.c}}
+\doxysubsubsection{\texorpdfstring{triangulate\_graph()}{triangulate\_graph()}}
+{\footnotesize\ttfamily \label{triangulation_8c_a57f6f1eb22c2d38419eba920d56e019f} 
+int triangulate\+\_\+graph (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_edge}{Edge}} \texorpdfstring{$\ast$}{*}}]{initial\+\_\+graph}{, }\item[{\doxymbox{\hyperlink{struct_node}{Node}} \texorpdfstring{$\ast$}{*}}]{output\+\_\+graph}{}\end{DoxyParamCaption})}
+
+
+
+Function transforms graph using "{}\+Planar Straight-\/\+Line Drawing algorithm"{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em initial\+\_\+graph} & strucute, which contains original graph. \\
+\hline
+{\em output\+\_\+graph} & structure, into which transformed graph will be saved. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or error\textquotesingle{}s id. 
+\end{DoxyReturn}
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{triangulation_8c_a57f6f1eb22c2d38419eba920d56e019f_icgraph}
+\end{center}
+\end{figure}

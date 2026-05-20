@@ -1,0 +1,16 @@
+<map id="src/triangulation.c" name="src/triangulation.c">
+<area shape="rect" id="Node000001" title=" " alt="" coords="189,5,314,32"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,80,66,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="213,35,81,80,79,75,215,30"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="89,80,152,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="227,34,159,74,156,70,231,31"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="177,80,251,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="247,31,230,68,225,65,243,34"/>
+<area shape="rect" id="Node000005" href="$graph_8h.html" title="Structures, which contain graph broken down into parts." alt="" coords="301,155,365,181"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="260,30,321,141,316,141,257,35"/>
+<area shape="rect" id="Node000006" href="$triangulation_8h.html" title="Mathematical transformation of a graph with triangulation algorithm." alt="" coords="326,80,428,107"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="274,30,345,72,339,72,273,35"/>
+<area shape="rect" id="Node000007" href="$error__handler_8h.html" title="Errors&#39; constants, their definition and function(handle_error) that acts accordingly to the error typ..." alt="" coords="452,80,560,107"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="296,30,450,74,445,76,296,35"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="371,106,350,143,347,139,367,109"/>
+</map>

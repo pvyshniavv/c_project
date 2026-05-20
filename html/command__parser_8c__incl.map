@@ -1,0 +1,16 @@
+<map id="src/command_parser.c" name="src/command_parser.c">
+<area shape="rect" id="Node000001" title=" " alt="" coords="172,5,326,32"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,80,66,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="211,35,81,79,79,75,212,30"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="90,80,154,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="225,34,159,74,156,70,229,31"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="179,80,247,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="245,31,228,68,224,64,241,34"/>
+<area shape="rect" id="Node000005" href="$command_8h.html" title="Structure, which contain data gathered from terminal and enums, which contain a list of format types ..." alt="" coords="292,155,382,181"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="258,30,324,141,319,141,255,35"/>
+<area shape="rect" id="Node000006" href="$command__parser_8h.html" title="Parse function, which gets terminal command." alt="" coords="323,80,455,107"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="274,30,353,72,348,73,273,35"/>
+<area shape="rect" id="Node000007" href="$error__handler_8h.html" title="Errors&#39; constants, their definition and function(handle_error) that acts accordingly to the error typ..." alt="" coords="479,80,586,107"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="299,30,471,75,466,77,298,35"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="382,106,356,144,353,140,377,108"/>
+</map>

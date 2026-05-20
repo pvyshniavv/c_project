@@ -1,0 +1,102 @@
+\doxysection{src/\+command\+\_\+parser.c File Reference}
+\hypertarget{command__parser_8c}{}\label{command__parser_8c}\index{src/command\_parser.c@{src/command\_parser.c}}
+{\ttfamily \+\#include $<$stdio.\+h$>$}\newline
+{\ttfamily \+\#include $<$string.\+h$>$}\newline
+{\ttfamily \+\#include $<$getopt.\+h$>$}\newline
+{\ttfamily \+\#include "{}command.\+h"{}}\newline
+{\ttfamily \+\#include "{}command\+\_\+parser.\+h"{}}\newline
+{\ttfamily \+\#include "{}error\+\_\+handler.\+h"{}}\newline
+Include dependency graph for command\+\_\+parser.\+c:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{command__parser_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{command__parser_8c_a5211e7799f6723882c6c5f5f9c60bd4a}{MINIMUM\+\_\+\+NUMBER\+\_\+\+OF\+\_\+\+ARGUMENTS}}~(1)
+\item 
+\+\#define \doxymbox{\hyperlink{command__parser_8c_a299d279ba5b9a309602f6153306e2d53}{RETURN\+\_\+\+SHORT\+\_\+\+VERSION\+\_\+\+OF\+\_\+\+A\+\_\+\+FLAG}}~(0)
+\item 
+\+\#define \doxymbox{\hyperlink{command__parser_8c_a6fbd908903ad34f115e0726001be8753}{MATCH}}~(0)
+\item 
+\+\#define \doxymbox{\hyperlink{command__parser_8c_abb508ea8227673f419e9fe3a86c30d8e}{FAIL}}~(-\/1)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{command__parser_8c_a9de9c0ba49b20e9ad715bbe1e5b95ff5}{parse\+\_\+command}} (int argc, char \texorpdfstring{$\ast$}{*}argv\+[$\,$]\+, \doxymbox{\hyperlink{struct_command}{Command}} \texorpdfstring{$\ast$}{*}cmd)
+\begin{DoxyCompactList}\small\item\em Function scans command terminal for file\textquotesingle{}s name, algorithm type and file output type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{command__parser_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{command__parser_8c_abb508ea8227673f419e9fe3a86c30d8e}\index{command\_parser.c@{command\_parser.c}!FAIL@{FAIL}}
+\index{FAIL@{FAIL}!command\_parser.c@{command\_parser.c}}
+\doxysubsubsection{\texorpdfstring{FAIL}{FAIL}}
+{\footnotesize\ttfamily \label{command__parser_8c_abb508ea8227673f419e9fe3a86c30d8e} 
+\+\#define FAIL~(-\/1)}
+
+\Hypertarget{command__parser_8c_a6fbd908903ad34f115e0726001be8753}\index{command\_parser.c@{command\_parser.c}!MATCH@{MATCH}}
+\index{MATCH@{MATCH}!command\_parser.c@{command\_parser.c}}
+\doxysubsubsection{\texorpdfstring{MATCH}{MATCH}}
+{\footnotesize\ttfamily \label{command__parser_8c_a6fbd908903ad34f115e0726001be8753} 
+\+\#define MATCH~(0)}
+
+\Hypertarget{command__parser_8c_a5211e7799f6723882c6c5f5f9c60bd4a}\index{command\_parser.c@{command\_parser.c}!MINIMUM\_NUMBER\_OF\_ARGUMENTS@{MINIMUM\_NUMBER\_OF\_ARGUMENTS}}
+\index{MINIMUM\_NUMBER\_OF\_ARGUMENTS@{MINIMUM\_NUMBER\_OF\_ARGUMENTS}!command\_parser.c@{command\_parser.c}}
+\doxysubsubsection{\texorpdfstring{MINIMUM\_NUMBER\_OF\_ARGUMENTS}{MINIMUM\_NUMBER\_OF\_ARGUMENTS}}
+{\footnotesize\ttfamily \label{command__parser_8c_a5211e7799f6723882c6c5f5f9c60bd4a} 
+\+\#define MINIMUM\+\_\+\+NUMBER\+\_\+\+OF\+\_\+\+ARGUMENTS~(1)}
+
+\Hypertarget{command__parser_8c_a299d279ba5b9a309602f6153306e2d53}\index{command\_parser.c@{command\_parser.c}!RETURN\_SHORT\_VERSION\_OF\_A\_FLAG@{RETURN\_SHORT\_VERSION\_OF\_A\_FLAG}}
+\index{RETURN\_SHORT\_VERSION\_OF\_A\_FLAG@{RETURN\_SHORT\_VERSION\_OF\_A\_FLAG}!command\_parser.c@{command\_parser.c}}
+\doxysubsubsection{\texorpdfstring{RETURN\_SHORT\_VERSION\_OF\_A\_FLAG}{RETURN\_SHORT\_VERSION\_OF\_A\_FLAG}}
+{\footnotesize\ttfamily \label{command__parser_8c_a299d279ba5b9a309602f6153306e2d53} 
+\+\#define RETURN\+\_\+\+SHORT\+\_\+\+VERSION\+\_\+\+OF\+\_\+\+A\+\_\+\+FLAG~(0)}
+
+
+
+\label{doc-func-members}
+\Hypertarget{command__parser_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{command__parser_8c_a9de9c0ba49b20e9ad715bbe1e5b95ff5}\index{command\_parser.c@{command\_parser.c}!parse\_command@{parse\_command}}
+\index{parse\_command@{parse\_command}!command\_parser.c@{command\_parser.c}}
+\doxysubsubsection{\texorpdfstring{parse\_command()}{parse\_command()}}
+{\footnotesize\ttfamily \label{command__parser_8c_a9de9c0ba49b20e9ad715bbe1e5b95ff5} 
+int parse\+\_\+command (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{argv}{\+[$\,$]\+, }\item[{\doxymbox{\hyperlink{struct_command}{Command}} \texorpdfstring{$\ast$}{*}}]{cmd}{}\end{DoxyParamCaption})}
+
+
+
+Function scans command terminal for file\textquotesingle{}s name, algorithm type and file output type. 
+
+In the process of scanning terminal function detects flags and process them.
+
+Valid input will look like this:\+ ./\+name\+\_\+of\+\_\+the\+\_\+program $<$file\+\_\+name$>$ -\/a $<$algorithm\+\_\+type$>$ -\/t/\+-\/b
+
+Flags meaning:\+ -\/a/\+--algorithm -\/ precedes $<$algorithm\+\_\+type$>$. By default $<$algorithm\+\_\+type$>$ is triangulation. -\/t/\+--text -\/ output file has txt format. -\/b/\+--binary -\/ output file has binary format. -\/h/\+--help -\/ user\textquotesingle{}s manual output -\/o/\+--output -\/ precedes name/\+path to the output file By default the directory is the same where the program is located By default file has text format.
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & The number of input arguments. \\
+\hline
+{\em argv} & Array of the input arguments. \\
+\hline
+{\em cmd} & Structure elements, that are used for storing data passed in the terminal.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or error\textquotesingle{}s id. 
+\end{DoxyReturn}
+Here is the caller graph for this function:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=241pt]{command__parser_8c_a9de9c0ba49b20e9ad715bbe1e5b95ff5_icgraph}
+\end{center}
+\end{figure}
