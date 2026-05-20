@@ -1,7 +1,0 @@
-<map id="triangulate_graph" name="triangulate_graph">
-<area shape="rect" id="Node000001" title="Function transforms graph using &quot;Planar Straight&#45;Line Drawing algorithm&quot;." alt="" coords="282,5,402,32"/>
-<area shape="rect" id="Node000002" href="$command__executor_8c.html#aff15f670a3e9f65dae8a2481aabd6775" title="Function executes terminal command." alt="" coords="103,5,234,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="263,19,234,21,234,16,269,19"/>
-<area shape="rect" id="Node000003" href="$main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="5,5,55,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
-</map>

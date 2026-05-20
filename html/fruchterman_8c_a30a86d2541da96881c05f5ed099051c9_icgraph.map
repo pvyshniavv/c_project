@@ -1,7 +1,0 @@
-<map id="use_fruchterman_for_graph" name="use_fruchterman_for_graph">
-<area shape="rect" id="Node000001" title="Function transforms graph using &quot;Fruchterman Graph Theory&quot;." alt="" coords="282,5,422,48"/>
-<area shape="rect" id="Node000002" href="$command__executor_8c.html#aff15f670a3e9f65dae8a2481aabd6775" title="Function executes terminal command." alt="" coords="103,13,234,40"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="264,27,234,29,234,24,269,27"/>
-<area shape="rect" id="Node000003" href="$main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="5,13,55,40"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="85,28,55,29,55,24,90,26"/>
-</map>

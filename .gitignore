@@ -1,80 +1,20 @@
-# ---------------------------------------------------------------------------
-# C/C++ standard files
-# ---------------------------------------------------------------------------
-
-# Compiled Object files
-*.o
-*.ko
-*.obj
-*.elf
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.so.*
-*.dylib
-*.dll
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debugging and Profiling files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-core
-*.gcda
-*.gcno
-*.gcov
-
-# Common Build Directories (e.g., used by CMake Tools extension)
-bin/
-build/
-obj/
+Plaintext
+*.class
 out/
+build/
 
-# ---------------------------------------------------------------------------
-# Visual Studio Code specific
-# ---------------------------------------------------------------------------
+.idea/
+*.iws
+*.iml
+*.ipr
 
-# VS Code workspace folder
-.vscode/*
+*.o
+*.out
+*.exe
+*.dll
+*.so
+*.dylib
+cmake-build-*/
 
-# Exceptions to the .vscode folder (Uncomment these if you want to share your project's build tasks and debug settings with others)
-#!.vscode/settings.json
-#!.vscode/tasks.json
-#!.vscode/launch.json
-#!.vscode/extensions.json
-#!.vscode/*.code-snippets
-
-# VS Code IntelliSense database (created by the C/C++ extension)
-.vscode/ipch/
-*.VC.db
-
-# Clangd cache (if you use the clangd extension instead of default IntelliSense)
-.clangd/
-.cache/
-
-# Local workspace file
-*.code-workspace
-
-# ---------------------------------------------------------------------------
-# OS Specific
-# ---------------------------------------------------------------------------
+*.log
 .DS_Store
-Thumbs.db
