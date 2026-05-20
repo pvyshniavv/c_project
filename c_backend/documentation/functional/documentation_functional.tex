@@ -1,0 +1,307 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+
+
+\title{Dokumentacja funkcjonalna}
+\author{Mateusz Kamieniecki \\ Jan Rękas}
+\date{\today}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Cel projektu}
+Celem projektu jest stworzenie aplikacji w języku C, umożliwiającej wyznaczanie
+współrzędnych wierzchołków grafów planarnych w sposób czytelny i intuicyjny dla
+użytkownika. Program pozwala na eksperymentowanie z dwoma różnymi algorytmami
+rozmieszczania wierzchołków oraz generowanie wyników w formacie binarnym,
+przeznaczonym do dalszego przetwarzania, lub w formacie tekstowym, przyjaznym
+dla użytkownika.
+
+\section{Opis funkcjonalności}
+
+Program udostępnia następujące funkcje:
+
+\begin{itemize}
+	\item wczytywanie grafu z pliku tekstowego,
+	\item wybór algorytmu wyznaczania współrzędnych wierzchołków,
+	\item obliczanie współrzędnych wierzchołków zgodnie z wybranym algorytmem,
+	\item zapis wyników w formacie binarnym lub tekstowym,
+	\item wyświetlanie komunikatów o błędach w przypadku nieprawidłowego formatu danych wejściowych,
+\end{itemize}
+
+\section{Format danych wejściowych}
+
+Graf wejściowy powinien być zapisany w pliku tekstowym, gdzie każda linia
+reprezentuje krawędź grafu. Format linii powinien być następujący:
+
+\begin{verbatim}
+<nazwa_krawędzi> <wierzchołek_A> <wierzchołek_B> <waga_krawędzi>
+...
+\end{verbatim}
+
+Przykład:
+\begin{verbatim}
+AB 1 2 1
+BC 2 3 1
+CD 3 4 1
+DB 4 2 1.407
+\end{verbatim}
+
+\section{Format danych wyjściowych}
+
+Program generuje plik zawierający współrzędne wierzchołków w formacie binarnym
+lub tekstowym.
+
+\subsection{Format tekstowy}
+Plik wyjściowy w formacie tekstowym ma rozszerzenie .txt
+Dane w formacie tekstowym są zapisywane w następujący sposób:
+
+\begin{verbatim}
+<liczba_wierzchołków>
+<wierzchołek> <współrzędna_x> <współrzędna_y>
+...
+\end{verbatim}
+
+Przykład:
+
+\begin{verbatim}
+4
+1 0.0 0.0
+2 1.0 0.0
+3 1.0 1.0
+4 0.0 1.0
+\end{verbatim}
+
+\subsection{Format binarny}
+
+Dane w formacie binarnym są zapisywane jako ciąg bajtów. Na początku pliku
+zapisana jest liczba wierzchołków (\texttt{int}, 4 bajty), a następnie każdy
+wierzchołek jest reprezentowany przez trzy wartości: identyfikator wierzchołka
+(4 bajty), współrzędna x (8 bajtów) i współrzędna y (8 bajtów). W sumie każdy
+wierzchołek zajmuje 20 bajtów. Plik wyjściowy ma w formacie binarnym rozszerzenie .bin
+
+Format danych binarnych można przedstawić następująco:
+
+\begin{verbatim}
+[liczba_wierzchołków]
+[ID_wierzchołka][współrzędna_x][współrzędna_y]
+...
+\end{verbatim}
+
+Przykład dla wierzchołków 1, 2, 3 i 4 z współrzędnymi (0.0, 0.0), (1.0, 0.0), (1.0, 1.0) i (0.0, 1.0):
+\begin{verbatim}
+[ 04 00 00 00 ]
+[ 01 00 00 00 ][00 00 00 00 00 00 00 00][00 00 00 00 00 00 00 00]
+[ 02 00 00 00 ][00 00 00 00 00 00 F0 3F][00 00 00 00 00 00 00 00]
+[ 03 00 00 00 ][00 00 00 00 00 00 F0 3F][00 00 00 00 00 00 F0 3F]
+[ 04 00 00 00 ][00 00 00 00 00 00 00 00][00 00 00 00 00 00 F0 3F]
+\end{verbatim}
+{\small\begin{verbatim}
+[ 00 00 00 00 ] - liczba int zapisana w formacie little-endian
+[00 00 00 00 00 00 00 00] - liczba double zapisana w formacie ISO 754
+[00 00 00 00 00 00 00 00] - liczba double zapisana w formacie ISO 754
+\end{verbatim}}
+
+W tym przykładzie, identyfikatory wierzchołków są zapisane jako 4-bajtowe
+liczby całkowite, a współrzędne x i y są zapisane jako 8-bajtowe liczby
+zmiennoprzecinkowe (double). W rzeczywistości, dane binarne będą zapisane bez
+spacji i nawiasów, a powyższy przykład jest jedynie ilustracją formatu danych.
+
+\section{Flagi sterujące programem}
+
+Program jest wywoływany z linii poleceń w następujący sposób:
+
+\begin{verbatim}
+./bin/planar_graph [flagi]
+\end{verbatim}
+Możliwe argumenty wywołania programu są opisane w poniższej tabelce to:
+
+\begin{center}
+	\begin{tabular}{|c|c|p{7cm}|c|}
+		\hline
+		\textbf{Flaga} & \textbf{Argument}          & \textbf{Opis}                                    & \textbf{Domyślnie}        \\
+		\hline
+		\texttt{-i}    & \texttt{<nazwa>}           & Nazwa pliku wejściowego z grafem                 & \texttt{"input.txt"}      \\
+		\hline
+		\texttt{-o}    & \texttt{<nazwa>}           & Ścieżka do pliku wyjściowego z wynikami          & \texttt{Katalog porgramu} \\
+		\hline
+		\texttt{-n}    & \texttt{<nazwa>}           & Nazwa pliku wyjściowego z wynikami               & \texttt{"output"}         \\
+		\hline
+		\texttt{-a}    & \texttt{<numer algorytmu>} & Wybór algorytmu rozmieszczania wierzchołków      & \texttt{1}                \\
+		\hline
+		\texttt{-b}    & —                          & Zapis wyników w formacie binarnym                & wyłączone*                \\
+		\hline
+		\texttt{-h}    & —                          & Zapis wyników w formacie czytelnym dla człowieka & wyłączone*                \\
+		\hline
+	\end{tabular}
+\end{center}
+* Jeżeli nie podano ani \texttt{-b}, ani \texttt{-h}, program automatycznie wybiera zapis binarny.
+
+\subsection{Opis flag}
+
+\begin{description}
+	\item[\texttt{-i <ścieżka>}]
+	      Określa ścieżkę do pliku wejściowego zawierającego opis grafu w formacie
+	      tekstowym (opisanym w sekcji 3). Jeśli flaga nie zostanie podana, program
+	      szuka pliku o nazwie \texttt{input.txt} w bieżącym katalogu roboczym.
+
+	\item[\texttt{-o <ścieżka>}]
+	      Określa ścieżkę do katalogu wyjściowego, w którym zostanie utworzony plik wyjściowy.
+	      Jeśli flaga nie zostanie podana, wyniki zostaną zapisane w bieżącym katalogu.
+	\item[\texttt{-n <nazwa>}]
+	      Określa nazwę pliku wyjściowego. Jeśli flaga nie zostanie podana, wyniki zostaną zapisane w pliku o nazwie \texttt{output}.
+
+	\item[\texttt{-a <nr>}]
+	      Wybór algorytmu wyznaczania współrzędnych. Dostępne wartości:
+	      \begin{itemize}
+		      \item \texttt{1} — Tutte embedding
+		      \item \texttt{2} — Spectral layout
+	      \end{itemize}
+	      Podanie nieobsługiwanej wartości skutkuje błędem i zakończeniem programu
+	      (patrz sekcja wyjątki).
+
+	\item[\texttt{-b}]
+	      Włącza zapis wyników w formacie binarnym (.bin)(opisanym w sekcji 4.2).
+	      Flaga nie przyjmuje dodatkowego argumentu.
+
+	\item[\texttt{-h}]
+	      Włącza zapis wyników w formacie tekstowym (.txt), czytelnym dla człowieka
+	      (opisanym w sekcji 4.1). Flaga nie przyjmuje dodatkowego argumentu.
+\end{description}
+
+\subsection{Przykładowe wywołania}
+Wczytanie grafu z pliku "graf.txt", zapis wyniku tekstowego do katalogu "wyniki", algorytm \texttt{alg1}
+\begin{verbatim}
+./bin/planar_graph -i graf.txt -o wyniki -n wynik -a alg1 -h
+\end{verbatim}
+Wczytanie grafu z pliku domyślnego, zapis binarny
+\begin{verbatim}
+./bin/planar_graph -b
+\end{verbatim}
+Zapis obu formatów jednocześnie
+\begin{verbatim}
+./bin/planar_graph -i graf.txt -n wynik -b -h
+\end{verbatim}
+
+\section{Sytuacje wyjątkowe}
+\label{sec:wyjatki}
+
+Poniżej opisano sytuacje wyjątkowe obsługiwane przez program. Komunikaty mogą być
+wypisywane na \texttt{stderr} lub \texttt{stdout} (zgodnie z implementacją danej
+funkcji), a kod powrotu zależy od przypadku i jest podany osobno dla każdego punktu.
+
+\begin{description}
+
+	\item[Nieznana lub niekompletna flaga]
+	      \hfill \\
+	      \textit{Sytuacja:} Podano flagę, której program nie rozpoznaje, lub flagę
+	      wymagającą argumentu (np. \texttt{-i}, \texttt{-o}, \texttt{-n}, \texttt{-a}) bez
+	      podania wartości. \\
+	      \textit{Komunikat:}
+	      \begin{verbatim}
+Nieznany lub niekompletny argument: <flaga>
+	      \end{verbatim}
+	      \textit{Kod powrotu:} \texttt{1}
+
+	\item[Nieobsługiwany algorytm]
+	      \hfill \\
+	      \textit{Sytuacja:} Wartość podana po fladze \texttt{-a} nie odpowiada
+	      żadnemu z dostępnych algorytmów. \\
+	      \textit{Komunikat:}
+	      \begin{verbatim}
+Taki algorytm nie jest obsługiwany
+	      \end{verbatim}
+	      \textit{Kod powrotu:} \texttt{1}
+
+	\item[Nie można otworzyć pliku wejściowego]
+	      \hfill \\
+	      \textit{Sytuacja:} Plik wskazany flagą \texttt{-i} (lub domyślny plik
+	      \texttt{input.txt}) nie istnieje lub brak uprawnień do odczytu. \\
+	      \textit{Komunikat:}
+	      \begin{verbatim}
+Blad: nie mozna otworzyc pliku wejściowego: <nazwa_pliku>
+	      \end{verbatim}
+	      \textit{Kod powrotu:} \texttt{1}
+
+	\item[Nie można otworzyć pliku wyjściowego]
+	      \hfill \\
+	      \textit{Sytuacja:} Program nie może utworzyć ani zapisać pliku wskazanego
+	      flagą \texttt{-o} (np. brak uprawnień do zapisu w danym katalogu). \\
+	      \textit{Komunikat:}
+	      \begin{verbatim}
+Nie udało się otworzyć pliku do zapisu: <systemowy_opis_błędu>
+	      \end{verbatim}
+	      \textit{Kod powrotu:} \texttt{0} (program wypisuje błąd zapisu, ale nie wymusza \texttt{EXIT\_FAILURE})
+
+	\item[Nieprawidłowe dane wejściowe (brak dodatnich ID)]
+	      \hfill \\
+	      \textit{Sytuacja:} Plik wejściowy jest pusty albo nie zawiera żadnych dodatnich
+	      identyfikatorów wierzchołków. \\
+	      \textit{Komunikat:}
+	      \begin{verbatim}
+Blad: plik ma zły format, mozliwe: 1 lub 0 wierzcholkow, same niedodatnie id wierzcholkow.
+	      \end{verbatim}
+	      \textit{Kod powrotu:} \texttt{1}
+
+	\item[Ostrzeżenie: krawędź z niedodatnim ID]
+	      \hfill \\
+	      \textit{Sytuacja:} W pliku wejściowym pojawia się krawędź z wierzchołkiem o ID $\le 0$. \\
+	      \textit{Komunikat:}
+	      \begin{verbatim}
+Ostrzeżenie: Ignorowanie krawędzi z niedodatnim ID wierzchołka.
+	      \end{verbatim}
+	      \textit{Kod powrotu:} brak wpływu (ostrzeżenie, przetwarzanie trwa dalej)
+
+	\item[Ostrzeżenie: krawędź poza zakresem ID]
+	      \hfill \\
+	      \textit{Sytuacja:} Dodawana krawędź odwołuje się do ID spoza zakresu \texttt{1..N}. \\
+	      \textit{Komunikat:}
+	      \begin{verbatim}
+Ignorowanie krawędzi z nieprawidłowym ID wierzchołka: <from> -> <to> (dozwolony zakres: 1..<N>)
+	      \end{verbatim}
+	      \textit{Kod powrotu:} brak wpływu (ostrzeżenie, przetwarzanie trwa dalej)
+
+	\item[Błąd alokacji pamięci]
+	      \hfill \\
+	      \textit{Sytuacja:} Program nie może zaalokować wymaganej pamięci podczas
+	      wczytywania grafu lub wykonywania obliczeń. \\
+	      \textit{Komunikat:}
+	      \begin{verbatim}
+Nie udało się zaalokować pamięci dla danych wektora
+Nie udało się realokować pamięci dla danych wektora
+Nie udało się zaalokować pamięci dla grafu
+Nie udało się zaalokować pamięci dla list sąsiedztwa grafu
+Nie udało się zaalokować pamięci dla nazwy krawędzi
+Nie udało się zaalokować pamięci dla nazwy krawędzi odwrotnej
+	      \end{verbatim}
+	      \textit{Kod powrotu:} \texttt{1}
+
+	\item[Problem numeryczny (algorytm Tutte)]
+	      \hfill \\
+	      \textit{Sytuacja:} W metodzie Gaussa pojawia się zerowy pivot. \\
+	      \textit{Komunikat:}
+	      \begin{verbatim}
+Problem numeryczny: zerowy element główny
+	      \end{verbatim}
+	      \textit{Kod powrotu:} \texttt{0} (komunikat informacyjny)
+
+	\item[Brak cyklu w grafie (algorytm Tutte)]
+	      \hfill \\
+	      \textit{Sytuacja:} Algorytm nie znajduje cyklu w grafie. \\
+	      \textit{Komunikat:}
+	      \begin{verbatim}
+Nie znaleziono cyklu
+	      \end{verbatim}
+	      \textit{Kod powrotu:} \texttt{0}
+
+\end{description}
+
+
+
+
+\end{document}

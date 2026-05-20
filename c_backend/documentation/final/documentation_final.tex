@@ -1,0 +1,207 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\lstset{
+    language=C,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!40!black},
+    numbers=left,
+    numberstyle=\tiny,
+    frame=single,
+    breaklines=true
+}
+
+\title{Dokumentacja końcowa projektu\\planar-graph-visualization}
+\author{Mateusz Kamieniecki \\ Jan Rękas}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Co zostało osiągnięte w projekcie}
+W projekcie dostarczono działającą aplikację CLI w języku C, która realizuje pełny
+pipeline:
+\begin{center}
+	wejście grafu \textrightarrow{} obliczenie layoutu \textrightarrow{} zapis wyników
+\end{center}
+Zaimplementowano i zintegrowano:
+\begin{itemize}
+	\item wczytanie grafu z pliku tekstowego,
+	\item algorytm \texttt{1} (Tutte),
+	\item algorytm \texttt{2} (Spectral layout),
+	\item zapis wyników do formatu binarnego i tekstowego,
+\end{itemize}
+
+\section{Uzyskane cechy funkcjonalne}
+\subsection{Wejście}
+Każda linia wejścia opisuje jedną krawędź:
+\begin{verbatim}
+<nazwa_krawędzi> <from> <to> <waga>
+\end{verbatim}
+W projekcie przyjęto i wdrożono 1-indeksowanie identyfikatorów wierzchołków
+(\texttt{1..N}); wierzchołek \texttt{0} nie jest używany.
+
+\subsection{Wyjście}
+\subsubsection{Format tekstowy (\texttt{.txt})}
+\begin{verbatim}
+<liczba_wierzchołków>
+<id> <x> <y>
+...
+\end{verbatim}
+
+\subsubsection{Format binarny (\texttt{.bin})}
+Kolejno zapisywane są:
+\begin{itemize}
+	\item liczba wierzchołków: \texttt{int} (4 bajty),
+	\item dla każdego wierzchołka: \texttt{id (int)}, \texttt{x (double)}, \texttt{y (double)}.
+\end{itemize}
+
+\subsection{Interfejs CLI}
+Program:
+\begin{verbatim}
+./bin/planar_graph [flagi]
+\end{verbatim}
+
+\begin{center}
+	\begin{tabular}{|c|c|p{7.5cm}|}
+		\hline
+		\textbf{Flaga} & \textbf{Argument}  & \textbf{Opis}                                                        \\
+		\hline
+		\texttt{-i}    & \texttt{<ścieżka>} & Plik wejściowy (domyślnie \texttt{input.txt})                        \\
+		\hline
+		\texttt{-o}    & \texttt{<katalog>} & Katalog wyjściowy (domyślnie bieżący)                                \\
+		\hline
+		\texttt{-n}    & \texttt{<nazwa>}   & Nazwa pliku wyjściowego bez rozszerzenia (domyślnie \texttt{output}) \\
+		\hline
+		\texttt{-a}    & \texttt{1|2}       & Wybór algorytmu (\texttt{1} = Tutte, \texttt{2} = Spectral Layout)   \\
+		\hline
+		\texttt{-b}    & —                  & Zapis binarny                                                        \\
+		\hline
+		\texttt{-h}    & —                  & Zapis tekstowy                                                       \\
+		\hline
+	\end{tabular}
+\end{center}
+
+W ramach finalizacji osiągnięto:
+\begin{itemize}
+	\item domyślny zapis binarny, gdy nie podano \texttt{-b} ani \texttt{-h},
+	\item możliwość zapisu obu formatów jednocześnie przy \texttt{-b -h}.
+\end{itemize}
+
+\section{Uzyskany stan implementacji}
+\subsection{Architektura modułów}
+\begin{itemize}
+	\item \texttt{main.c} — parsowanie flag, walidacja wejścia, uruchomienie algorytmu, zapis wyników.
+	\item \texttt{fileio.c/.h} — odczyt grafu i zapis layoutu.
+	\item \texttt{graph.c/.h} — struktury grafu i operacje na listach sąsiedztwa.
+	\item \texttt{tutte.c/.h} — implementacja osadzania Tutte.
+	\item \texttt{node.h} — definicje \texttt{Node} i \texttt{GraphLayout}.
+	\item \texttt{utils.c/.h} — parsowanie wyboru algorytmu.
+\end{itemize}
+
+\subsection{Kluczowe struktury danych}
+\begin{lstlisting}
+typedef struct Edge {
+    int to;
+    double weight;
+    char *name;
+} Edge;
+
+typedef struct Vector {
+    Edge *data;
+    int size;
+    int capacity;
+} Vector;
+
+typedef struct Graph {
+    int vertices_num;
+    Vector *adj;
+} Graph;
+
+typedef struct Node {
+    int id;
+    double x;
+    double y;
+} Node;
+
+typedef struct {
+    int count;
+    Node *nodes;
+} GraphLayout;
+\end{lstlisting}
+
+\subsection{Najważniejsze interfejsy}
+\subsubsection{\texttt{find\_max\_vertex\_id}}
+\textbf{Przyjmuje:} \texttt{const char *filepath}\\
+\textbf{Zwraca:} \texttt{int} (\texttt{-1} przy braku dostępu do pliku, \texttt{0} dla pustych/niepoprawnych danych, inaczej maksymalne ID)
+
+\subsubsection{\texttt{load\_graph\_from\_file}}
+\textbf{Przyjmuje:} \texttt{const char *filepath}, \texttt{int vertices\_amount}\\
+\textbf{Zwraca:} \texttt{Graph*}
+
+\subsubsection{\texttt{add\_edge}}
+\textbf{Przyjmuje:} \texttt{Graph *graph}, \texttt{int from}, \texttt{int to}, \texttt{double weight}, \texttt{char *name}\\
+\textbf{Zwraca:} \texttt{void}
+
+\subsubsection{\texttt{find\_embedding}}
+\textbf{Przyjmuje:} \texttt{Graph *g}, \texttt{GraphLayout *layout}\\
+\textbf{Zwraca:} \texttt{void}
+
+\section{Zrealizowana obsługa błędów i ostrzeżeń}
+W kodzie i dokumentacji ujednolicono komunikaty. Obsłużone są m.in.:
+\begin{itemize}
+	\item nieznane/niekompletne flagi (\texttt{EXIT\_FAILURE}),
+	\item nieobsługiwany algorytm (\texttt{EXIT\_FAILURE}),
+	\item brak dostępu do pliku wejściowego (\texttt{EXIT\_FAILURE}),
+	\item brak dodatnich identyfikatorów wierzchołków (\texttt{EXIT\_FAILURE}),
+	\item ostrzeżenia o pomijanych krawędziach (program działa dalej),
+	\item problemy alokacji pamięci (zakończenie awaryjne),
+	\item brak cyklu / problem numeryczny w Tutte (komunikat informacyjny).
+\end{itemize}
+
+\section{Kompilacja i uruchomienie programu}
+Program kompilowany jest przez \texttt{Makefile} znajdujący się w katalogu głównym repozytorium.
+
+\subsection{Kompilacja}
+\begin{verbatim}
+make build
+\end{verbatim}
+Po kompilacji plik wykonywalny znajduje się pod ścieżką:
+\begin{verbatim}
+./bin/planar_graph
+\end{verbatim}
+
+\subsection{Uruchomienie}
+Uruchomienie domyślne (z domyślnym \texttt{input.txt}):
+\begin{verbatim}
+./bin/planar_graph
+\end{verbatim}
+
+Uruchomienie z przykładowymi flagami:
+\begin{verbatim}
+./bin/planar_graph -i graf.txt -o wyniki -n wynik -a 1 -b -h
+\end{verbatim}
+
+\section{Limitacje}
+Obecna wersja programu ma następujące ograniczenia:
+\begin{itemize}
+	\item algorytm Tutte może nie zadziałać dla danego grafu z powody jego konstrukcji (brak cyklu, nie 3-connected)
+\end{itemize}
+
+\section{Podsumowanie końcowe}
+Finalnie uzyskano spójny, działający program CLI do generowania layoutu grafów,
+z jednolitym 1-indeksowaniem wierzchołków, poprawnym zapisem wyników
+(\texttt{.txt} i \texttt{.bin}), zaktualizowaną dokumentacją oraz
+komunikatami błędów/ostrzeżeń
+\end{document}

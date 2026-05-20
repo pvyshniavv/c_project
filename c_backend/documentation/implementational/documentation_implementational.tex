@@ -1,0 +1,276 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=C,                     % set language
+    basicstyle=\ttfamily\small,     % font style
+    keywordstyle=\color{blue},      % keywords
+    stringstyle=\color{red},        % strings
+    commentstyle=\color{green},     % comments
+    numbers=left,                   % line numbers
+    numberstyle=\tiny,              
+    frame=single,                   % frame around code
+    breaklines=true                 % automatic line breaking
+}
+
+
+
+
+\title{Dokumentacja implementacyjna}
+\author{Mateusz Kamieniecki \\ Jan Rękas}
+\date{\today}
+
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{main.c}
+W funkcji main mamy wczytywanie argumentów do odpalania programu przy użyciu
+getopt(). Argumenty mają domyślnie wartości:
+\begin{itemize}
+	\item -i: input.txt
+	\item -o: . (domyslny katalog gdzie znajduje się program)
+	\item -n: output
+	\item -a: 1
+\end{itemize}
+Jak żaden z argumentów \textit{-h} oraz \textit{-b} nie jest podany to program
+automatycznie uruchamia się z flagą \textit{-b} włączoną i informuje użytkownika. W
+funkcji main są też odpalane funkcje do wczytywania danych z pliku, wypisywania
+danych do pliku/plików, funkcje tworzące graf z plików oraz funkcje do
+przeprowadzenia algorytmów.
+
+\section{fileio.c oraz fileio.h}
+
+Pliki \texttt{fileio.c} i \texttt{fileio.h} odpowiadają za wczytywanie grafu z pliku tekstowego
+oraz zapisywanie wyników obliczeń do pliku wyjściowego w formacie tekstowym lub binarnym.
+
+\subsection{fileio.h}
+
+Nagłówek deklaruje cztery funkcje:
+
+\begin{lstlisting}
+Graph* load_graph_from_file(const char *filepath, int vertices_amount);
+int    find_max_vertex_id(const char *filepath);
+void   save_layout_human (const char *filepath, GraphLayout *layout);
+void   save_layout_binary(const char *filepath, GraphLayout *layout);
+\end{lstlisting}
+
+\subsection{fileio.c}
+
+\subsubsection{find\_max\_vertex\_id}
+\textbf{Przyjmuje:}
+\begin{itemize}
+	\item const char *filepath --- ścieżka do pliku wejściowego
+\end{itemize}
+\textbf{Zwraca:}
+\begin{itemize}
+	\item int --- \texttt{-1} gdy nie udało się otworzyć pliku, \texttt{0} gdy plik jest pusty lub bez dodatnich ID, albo największy ID wierzchołka
+\end{itemize}
+Pomocnicza funkcja przechodzi przez cały plik metodą \texttt{fscanf}, wczytując kolejne
+linie w formacie \texttt{<nazwa> <from> <to> <waga>} i wyznacza najwyższy identyfikator
+wierzchołka spośród wszystkich wartości \texttt{from} i \texttt{to}.
+
+\subsubsection{load\_graph\_from\_file}
+\textbf{Przyjmuje:}
+\begin{itemize}
+	\item const char *filepath --- ścieżka do pliku wejściowego
+	\item int vertices\_amount --- liczba wierzchołków grafu
+\end{itemize}
+\textbf{Zwraca:}
+\begin{itemize}
+	\item Graph* --- wskaźnik na wczytany graf lub \texttt{NULL} w przypadku błędu
+\end{itemize}
+Funkcja otwiera plik o podanej ścieżce. W przypadku błędu wypisuje komunikat na
+\texttt{stderr} i zwraca \texttt{NULL}.\\
+Graf tworzony jest z \texttt{vertices\_amount} wierzchołkami (identyfikatory \texttt{1..N}).\\
+Pętla \texttt{fscanf} wczytuje kolejne krawędzie i dodaje je do grafu wywołaniem
+\texttt{add\_edge}. Krawędzie z niedodatnimi identyfikatorami są ignorowane.
+
+\subsubsection{save\_layout\_human}
+\textbf{Przyjmuje:}
+\begin{itemize}
+	\item const char *filepath --- ścieżka do pliku wyjściowego
+	\item GraphLayout *layout --- struktura z obliczonym layoutem
+\end{itemize}
+\textbf{Zwraca:}
+\begin{itemize}
+	\item void
+\end{itemize}
+Funkcja otwiera plik do zapisu. W przypadku błędu wypisuje komunikat na \texttt{stderr}
+i kończy działanie.\\
+Najpierw zapisuje liczbę wierzchołków (\texttt{layout->count}) w pierwszej linii pliku.\\
+Dla każdego węzła w strukturze \texttt{GraphLayout} zapisuje wiersz w formacie:
+\begin{center}
+	\texttt{<id> <x> <y>}
+\end{center}
+Po zakończeniu wypisuje potwierdzenie na standardowe wyjście.
+
+\subsubsection{save\_layout\_binary}
+\textbf{Przyjmuje:}
+\begin{itemize}
+	\item const char *filepath --- ścieżka do pliku wyjściowego
+	\item GraphLayout *layout --- struktura z obliczonym layoutem
+\end{itemize}
+\textbf{Zwraca:}
+\begin{itemize}
+	\item void
+\end{itemize}
+Funkcja \texttt{save\_layout\_binary} zapisuje wyniki do pliku binarnego.
+Najpierw zapisuje liczbę wierzchołków (\texttt{int}, 4 bajty). Następnie dla każdego wierzchołka
+zapisuje kolejno jego identyfikator jako \texttt{int} (4 bajty), współrzędną
+$x$ jako \texttt{double} (8 bajtów) oraz współrzędną $y$ jako \texttt{double}
+(8 bajtów), co daje łącznie 20 bajtów na wierzchołek.
+
+\section{graph.c oraz graph.h}
+\subsection{Graph.h}
+Graph.h udostępnia następujące structy:
+\subsubsection{struct Edge}
+\begin{lstlisting}
+typedef struct Edge {
+    int to;
+    double weight;
+    char *name;
+} Edge;
+\end{lstlisting}
+Struct Edge reprezentuje krawędź w grafie. Zawiera ona informacje o wierzchołku
+docelowym, wadze krawędzi oraz nazwie krawędzi.
+\subsubsection{struct Vector}
+\begin{lstlisting}
+typedef struct Vector {
+    Edge *data;
+    int size;
+    int capacity;
+} Vector;
+\end{lstlisting}
+Struct Vector reprezentuje dynamiczną tablicę krawędzi. Zawiera ona wskaźnik na
+dane, aktualny rozmiar oraz pojemność tablicy.
+\subsubsection{struct Graph}
+\begin{lstlisting}
+typedef struct Graph {
+    int vertices_num;
+    Vector *adj;
+} Graph;
+\end{lstlisting}
+Struct Graph reprezentuje graf nieskierowany. Zawiera ona liczbę wierzchołków
+oraz wskaźnik na tablicę wektorów, gdzie każdy wektor reprezentuje listę
+sąsiedztwa dla danego wierzchołka. Identyfikatory wierzchołków są 1-indeksowane.
+\subsection{graph.c}
+Graph.c udostępnia następujące funkcje:
+\subsubsection{create\_graph}
+\textbf{Przyjmuje:}
+\begin{itemize}
+	\item int vertices\_num --- liczba wierzchołków w grafie
+\end{itemize}
+\textbf{Zwraca:}
+\begin{itemize}
+	\item struct Graph --- wskaźnik na utworzony graf lub \texttt{NULL} w przypadku błędu alokacji pamięci.
+\end{itemize}
+Funkcja create\_graph tworzy graf o określonej liczbie wierzchołków, alokując
+pamięć dla tablicy wektorów i inicjalizując każdy wektor.
+\subsubsection{add\_edge}
+\textbf{Przyjmuje:}
+\begin{itemize}
+	\item struct Graph *graph --- wskaźnik na graf, do którego dodajemy krawędź
+	\item int from --- identyfikator wierzchołka początkowego
+	\item int to --- identyfikator wierzchołka docelowego
+	\item double weight --- waga krawędzi
+	\item const char *name --- nazwa krawędzi
+\end{itemize}
+\textbf{Zwraca:}
+\begin{itemize}
+	\item void
+\end{itemize}
+Funkcja add\_edge dodaje krawędź do grafu, aktualizując listę sąsiedztwa dla obu wierzchołków (ponieważ graf jest nieskierowany).
+\subsubsection{free\_graph}
+\textbf{Przyjmuje:}
+\begin{itemize}
+	\item struct Graph *graph --- wskaźnik na graf do zwolnienia
+\end{itemize}
+\textbf{Zwraca:}
+\begin{itemize}
+	\item void
+\end{itemize}
+Funkcja free\_graph zwalnia pamięć zajmowaną przez graf, w tym pamięć dla list
+sąsiedztwa i samego grafu.
+\section{node.h}
+Node.h udostępnia dwa struktury:
+
+\subsubsection{struct Node}
+\begin{lstlisting}
+typedef struct Node {
+    int id;
+    double x;
+    double y;
+} Node;
+\end{lstlisting}
+Struct \texttt{Node} reprezentuje wierzchołek w grafie, zawierając informacje o jego
+współrzędnych $(x, y)$ oraz unikalnym identyfikatorze \texttt{id}.
+
+\subsubsection{struct GraphLayout}
+\begin{lstlisting}
+typedef struct {
+    int count;
+    Node *nodes;
+} GraphLayout;
+\end{lstlisting}
+Struct \texttt{GraphLayout} przechowuje końcowe wyniki obliczeń --- tablicę \texttt{nodes}
+zawierającą \texttt{count} wierzchołków wraz z wyznaczonymi współrzędnymi. Jest to typ
+przekazywany do funkcji zapisu w \texttt{fileio.c} i zwracany przez funkcje algorytmów.
+\section{tutte.c oraz tutte.h}
+\subsection{tutte.c}
+\subsubsection{find\_embedding}
+\textbf{Przyjmuje:}
+\begin{itemize}
+	\item struct Graph *graph --- wskaźnik na graf, dla którego obliczamy embedding
+	\item struct GraphLayout *layout --- wskaźnik na strukturę, do której zapiszemy wyniki
+\end{itemize}
+\textbf{Zwraca:}
+\begin{itemize}
+	\item void
+\end{itemize}
+Funkcja jako argument przyjmuje struktury Graph oraz GraphLayout, liczy
+współrzędne metodą Tutte i zapisuje je do struktury GraphLayout.
+
+
+\section{spectral\_layout.c oraz spectral\_layout.h}
+\subsection{spectral\_layout.c}
+Spectral\_layout.c udostępnia następujące funkcje:
+\subsubsection{compute\_spectral\_layout}
+Funkcja compute\_spectral\_layout implementuje algorytm rozmieszczenia spektralnego.
+Współrzędne $x$ wierzchołków wyznaczane są na podstawie wektora Fiedlera (drugi wektor
+własny macierzy Laplace'a, odpowiadający najmniejszej niezerowej wartości własnej $\lambda_2$),
+a współrzędne $y$ na podstawie trzeciego wektora własnego ($\lambda_3$). Funkcja wywołuje
+kolejno funkcje pomocnicze i zwraca wypełnioną strukturę GraphLayout.
+\subsubsection{compute\_degrees}
+Funkcja compute\_degrees oblicza stopień każdego wierzchołka grafu, iterując po jego
+liście sąsiedztwa i zapisując wyniki do tablicy degrees, która jest wymagana przez
+pozostałe funkcje algorytmu.
+\subsubsection{laplacian\_multiply}
+Funkcja laplacian\_multiply oblicza iloczyn macierzy Laplace'a i wektora bez jawnego
+budowania macierzy --- korzysta bezpośrednio z listy sąsiedztwa grafu oraz tablicy
+stopni wierzchołków, co pozwala uniknąć alokacji tablicy rozmiaru $n^2$.
+\subsubsection{find\_eigenvector}
+Funkcja find\_eigenvector wyznacza kolejny wektor własny macierzy Laplace'a metodą
+potęgową z deflacją. Przyjmuje tablicę wcześniej znalezionych wektorów własnych
+i ortogonalizuje względem nich wynik, aby uzyskać następny w kolejności wektor własny.
+\subsubsection{orthogonalize}
+Funkcja orthogonalize przeprowadza ortogonalizację Grama--Schmidta danego wektora
+względem przekazanej bazy wektorów, co jest wykorzystywane w trakcie metody potęgowej
+do eliminacji już znalezionych wektorów własnych.
+\subsubsection{normalize\_vector}
+Funkcja normalize\_vector normalizuje wektor do długości jednostkowej, dzieląc każdy
+jego element przez normę euklidesową. Jest wywoływana po każdej iteracji metody
+potęgowej.
+\subsubsection{dot\_product}
+Funkcja dot\_product oblicza iloczyn skalarny dwóch wektorów. Jest funkcją pomocniczą
+wykorzystywaną przez orthogonalize oraz find\_eigenvector do sprawdzania zbieżności.
+
+\end{document}
