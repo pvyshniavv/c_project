@@ -1,7 +1,7 @@
 package GUI_Project.integration;
 
 import GUI_Project.model.*;
-import io.GraphFileReader;
+import GUI_Project.io.GraphFileReader;
 
 import java.io.File;
 import java.util.ArrayList;

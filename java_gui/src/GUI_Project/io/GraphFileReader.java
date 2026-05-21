@@ -1,4 +1,4 @@
-package io;
+package GUI_Project.io;
 
 import GUI_Project.model.Edge;
 import GUI_Project.model.Node;
