@@ -1,4 +1,4 @@
-package GUI_Project.integration;
+package io;
 
 import GUI_Project.model.Edge;
 import GUI_Project.model.Node;
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class GraphFileReader {
 
-    public List<Node> readNodes (String filePath) throws Exception {
+    static public List<Node> readNodes (String filePath) throws Exception {
         List<Node> nodes = new ArrayList<>();
 
         try(BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -59,7 +59,7 @@ public class GraphFileReader {
         return nodes;
     }
 
-    public List<Node> readNodesFromBinary(String filePath) throws Exception {
+    static public List<Node> readNodesFromBinary(String filePath) throws Exception {
         List<Node> nodes = new ArrayList<>();
 
         try(DataInputStream dis = new DataInputStream(new FileInputStream(filePath))) {
@@ -91,7 +91,7 @@ public class GraphFileReader {
         return nodes;
     }
 
-    public List<Edge> readEdges (String filePath) throws Exception {
+    static public List<Edge> readEdges (String filePath) throws Exception {
         List<Edge> edges = new ArrayList<>();
 
         try(BufferedReader br = new BufferedReader(new FileReader(filePath))) {

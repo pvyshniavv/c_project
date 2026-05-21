@@ -1,8 +1,7 @@
 package GUI_Project.integration;
 
-import GUI_Project.model.FileFormat;
-import GUI_Project.model.OutputGraph;
-import GUI_Project.model.ProcessingConfig;
+import GUI_Project.model.*;
+import io.GraphFileReader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -49,7 +48,17 @@ public class CExternalProcessor implements GraphProcessor {
     if(exitCode != 0) {
         throw new Exception("C-program execution failed with the following error" + exitCode);
     }
-        return null;
+
+        List<Node>calculatedNodes;
+        if(config.getOutputFileFormat() == FileFormat.TEXT) {
+            calculatedNodes = GraphFileReader.readNodes(config.getOutputFileName());
+        }
+        else {
+            calculatedNodes = GraphFileReader.readNodesFromBinary(config.getOutputFileName());
+        }
+        List<Edge> calculatedEdges =  GraphFileReader.readEdges(config.getOutputFileName());
+
+        return new OutputGraph(calculatedNodes, calculatedEdges);
     }
 }
 
