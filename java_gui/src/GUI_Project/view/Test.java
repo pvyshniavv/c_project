@@ -1,4 +1,4 @@
 package GUI_Project.view;
 
-public class test {
+public class Test {
 }
