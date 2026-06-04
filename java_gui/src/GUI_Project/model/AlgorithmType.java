@@ -1,9 +1,12 @@
 package GUI_Project.model;
-
+/**
+ * Available layout / partitioning algorithms.
+ * The {@code flag} value is passed to the external C module on the command line.
+ */
 public enum AlgorithmType {
 
-    TUTTE("Tutte", "--tutte"),
-    SPECTRAL_LAYOUT("SpectralLayout", "--spectral");
+    TUTTE("Tutte", "-a alg1"),
+    SPECTRAL_LAYOUT("SpectralLayout", "-a alg2");
 
     private final String displayName;
     private final String flag;
