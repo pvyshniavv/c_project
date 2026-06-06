@@ -1,25 +1,38 @@
 package GUI_Project.model;
 
+/**
+ * Edge model. Stores the identifiers of the two endpoint nodes,
+ * an edge name and a weight. Pure data holder.
+ */
 public class Edge {
-    private int sourceId;
-    private int targetId;
-    private double weight;
-    private String edgeName;
 
-    public Edge(String edgeName, int sourceId, int targetId, double weight) {
+    private final int sourceId;
+    private final int targetId;
+    private final String name;
+    private final double weight;
+
+    public Edge(int sourceId, int targetId, String name, double weight) {
         this.sourceId = sourceId;
         this.targetId = targetId;
+        this.name = name;
         this.weight = weight;
-        this.edgeName = edgeName;
+    }
+    public int getSourceId() {
+        return sourceId;
+    }
+    public int getTargetId() {
+        return targetId;
+    }
+    public String getName() {
+        return name;
+    }
+    public double getWeight() {
+        return weight;
     }
 
-    public int getSourceId() { return sourceId; }
-    public int getTargetId() { return targetId;}
-    public double getWeight() { return weight; }
-    public String getEdgeName() { return edgeName; }
-
-    public void setSourceId(int sourceId) { this.sourceId = sourceId; }
-    public void setTargetId(int targetId) { this.targetId = targetId; }
-    public void setWeight(int weight) { this.weight = weight; }
-    public void setEdgeName(String edgeName) { this.edgeName = edgeName; }
+    @Override
+    public String toString() {
+        return "Edge{" + sourceId + "->" + targetId
+                + ", name='" + name + "', weight=" + weight + '}';
+    }
 }
