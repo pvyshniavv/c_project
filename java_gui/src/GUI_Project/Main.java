@@ -3,6 +3,7 @@ package GUI_Project;
 import GUI_Project.integration.CExternalProcessor;
 import GUI_Project.integration.GraphProcessor;
 import GUI_Project.io.GraphFileReader;
+import GUI_Project.presenter.GraphPresenter;
 import GUI_Project.view.MainFrame;
 import javax.swing.SwingUtilities;
 import java.io.File;
@@ -23,6 +24,11 @@ public class Main {
         MainFrame frame = new MainFrame();
         GraphFileReader reader = new GraphFileReader();
         GraphProcessor processor = new CExternalProcessor(cExecutable);
+
+        // The presenter binds itself to the view's events in its constructor.
+        new GraphPresenter(frame, reader, processor);
+
+        frame.setVisible(true);
 
     }
 }
