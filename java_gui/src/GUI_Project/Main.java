@@ -1,34 +1,32 @@
 package GUI_Project;
 
-import GUI_Project.integration.CExternalProcessor;
-import GUI_Project.integration.GraphProcessor;
 import GUI_Project.io.GraphFileReader;
 import GUI_Project.presenter.GraphPresenter;
 import GUI_Project.view.MainFrame;
+
 import javax.swing.SwingUtilities;
-import java.io.File;
 
 /**
  * Application entry point. Hands control to the Event Dispatch Thread (EDT)
- * and creates the presentation-layer objects, wiring the MVP triad together.
+ * and wires the MVP triad together.
+ * <p>
+ * Note: the {@code integration} package (containing {@code GraphProcessor} and
+ * {@code CExternalProcessor}) is part of the documented architecture and is
+ * kept in the codebase for future direct integration with the compiled C
+ * module. The current presenter performs partitioning in pure Java
+ * (K-means by node position), so no external executable is required to run
+ * the application.
  */
 public class Main {
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Main::startApplication);
     }
-    private static void startApplication() {
-        // Path to the compiled C module. Adjust to your build output, e.g.
-        // ../c_backend/graph_tool  (or graph_tool.exe on Windows).
-        File cExecutable = new File("../c_backend/graph_tool");
 
+    private static void startApplication() {
         MainFrame frame = new MainFrame();
         GraphFileReader reader = new GraphFileReader();
-        GraphProcessor processor = new CExternalProcessor(cExecutable);
-
-        // The presenter binds itself to the view's events in its constructor.
-        new GraphPresenter(frame, reader, processor);
-
+        new GraphPresenter(frame, reader); // binds itself to view events
         frame.setVisible(true);
-
     }
 }

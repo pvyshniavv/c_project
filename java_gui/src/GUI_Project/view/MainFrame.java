@@ -12,18 +12,29 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 /**
- * The main application window (View in MVP architecture).
- * It acts as a container for the GraphPanel (center) and ToolbarPanel (east),
- * and provides a top menu bar for file operations.
+ * Main application window. Hosts the menu bar (file selection), the central
+ * {@link GraphPanel} and the side {@link ToolbarPanel}. Passive view: it
+ * exposes hooks and dialogs but contains no application logic.
+ * <p>
+ * The "Plik" menu offers three loading paths:
+ * <ul>
+ *   <li>A text edges file (typical C input) — graph topology.</li>
+ *   <li>A text coordinates file (typical C output) — node positions.</li>
+ *   <li>A binary graph file from the C module — both topology and positions
+ *       in a single file.</li>
+ * </ul>
  */
 public class MainFrame extends JFrame {
+
     private final GraphPanel graphPanel = new GraphPanel();
     private final ToolbarPanel toolbarPanel = new ToolbarPanel();
 
-    // Top menu items
-    private final JMenuItem openEdgesItem = new JMenuItem("Wczytaj plik wejściowy (krawędzie)...");
-    private final JMenuItem openCoordsTextItem = new JMenuItem("Wczytaj współrzędne (tekst)...");
-    private final JMenuItem openCoordsBinaryItem = new JMenuItem("Wczytaj współrzędne (binarny)...");
+    private final JMenuItem openEdgesItem =
+            new JMenuItem("Wczytaj plik wejściowy (krawędzie)...");
+    private final JMenuItem openCoordsTextItem =
+            new JMenuItem("Wczytaj współrzędne (tekst)...");
+    private final JMenuItem openBinaryGraphItem =
+            new JMenuItem("Wczytaj graf binarny (z modułu C)...");
 
     public MainFrame() {
         super("Narzędzie do pozycjonowania grafów");
@@ -31,25 +42,23 @@ public class MainFrame extends JFrame {
         setSize(900, 600);
         setLocationRelativeTo(null);
 
-        // Setup the layout
         setJMenuBar(buildMenuBar());
-        add(graphPanel, BorderLayout.CENTER); // Graph canvas takes up most of the space
+        add(graphPanel, BorderLayout.CENTER);
         add(toolbarPanel, BorderLayout.EAST);
     }
 
-    /** Creates and populates the top menu bar. */
     private JMenuBar buildMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("Plik");
-
         fileMenu.add(openEdgesItem);
-        fileMenu.addSeparator(); // Adds a visual dividing line
         fileMenu.add(openCoordsTextItem);
-        fileMenu.add(openCoordsBinaryItem);
-
+        fileMenu.addSeparator();
+        fileMenu.add(openBinaryGraphItem);
         menuBar.add(fileMenu);
         return menuBar;
     }
+
+    // ---- accessors for the presenter ------------------------------------
 
     public GraphPanel getGraphPanel() {
         return graphPanel;
@@ -59,9 +68,6 @@ public class MainFrame extends JFrame {
         return toolbarPanel;
     }
 
-    //Action Listeners assignment
-    // The View is passive. It just lets the Presenter attach its logic to these buttons.
-
     public void addOpenEdgesListener(ActionListener listener) {
         openEdgesItem.addActionListener(listener);
     }
@@ -70,36 +76,32 @@ public class MainFrame extends JFrame {
         openCoordsTextItem.addActionListener(listener);
     }
 
-    public void addOpenCoordsBinaryListener(ActionListener listener) {
-        openCoordsBinaryItem.addActionListener(listener);
+    public void addOpenBinaryGraphListener(ActionListener listener) {
+        openBinaryGraphItem.addActionListener(listener);
     }
 
-    //Helper methods for system dialogs
+    // ---- dialogs --------------------------------------------------------
 
-    /** Opens a system file chooser dialog for loading files. */
+    /** Opens a file chooser and returns the selected file, or {@code null}. */
     public File chooseOpenFile(String description, String... extensions) {
         JFileChooser chooser = new JFileChooser();
         if (extensions.length > 0) {
-            // Filter to show only specific file types (e.g., .txt, .csv)
             chooser.setFileFilter(new FileNameExtensionFilter(description, extensions));
         }
         int result = chooser.showOpenDialog(this);
         return (result == JFileChooser.APPROVE_OPTION) ? chooser.getSelectedFile() : null;
     }
 
-    /** Opens a system file chooser dialog for saving files. */
     public File chooseSaveFile() {
         JFileChooser chooser = new JFileChooser();
         int result = chooser.showSaveDialog(this);
         return (result == JFileChooser.APPROVE_OPTION) ? chooser.getSelectedFile() : null;
     }
 
-    /** Displays a red error popup. */
     public void showError(String message) {
         JOptionPane.showMessageDialog(this, message, "Błąd", JOptionPane.ERROR_MESSAGE);
     }
 
-    /** Displays a blue informational popup. */
     public void showInfo(String message) {
         JOptionPane.showMessageDialog(this, message, "Informacja",
                 JOptionPane.INFORMATION_MESSAGE);

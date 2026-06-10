@@ -1,62 +1,63 @@
 package GUI_Project.presenter;
 
-import GUI_Project.integration.GraphProcessor;
-import GUI_Project.integration.ProcessingException;
 import GUI_Project.io.GraphFileReader;
-import GUI_Project.model.AlgorithmType;
 import GUI_Project.model.Edge;
-import GUI_Project.model.FileFormat;
 import GUI_Project.model.Node;
 import GUI_Project.model.OutputGraph;
-import GUI_Project.model.ProcessingConfig;
 import GUI_Project.view.MainFrame;
 import GUI_Project.view.ToolbarPanel;
 
+import java.io.BufferedWriter;
 import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
+/**
+ * Central connector of the system (MVP "Presenter").
+ * <p>
+ * Captures events from the View, initiates file reads through the IO package,
+ * runs the partitioning (Java K-means by default), and pushes the resulting
+ * {@link OutputGraph} back to the View. All critical operations are wrapped in
+ * try-catch here so the application never crashes and the user always sees a
+ * readable message.
+ */
 public class GraphPresenter {
 
     private static final double DEFAULT_LAYOUT_RADIUS = 100.0;
 
     private final MainFrame view;
     private final GraphFileReader reader;
-    private final GraphProcessor processor;
+    private final KMeansPartitioner partitioner = new KMeansPartitioner();
 
-    /** State kept in the presenter. */
     private final List<Edge> currentEdges = new ArrayList<>();
     private final List<Node> currentNodes = new ArrayList<>();
-    private Path currentEdgesPath;       // input file for the C module
-    private FileFormat lastCoordsFormat = FileFormat.TEXT;
-    private Path lastOutputPath;
 
-    public GraphPresenter(MainFrame view, GraphFileReader reader, GraphProcessor processor) {
+    public GraphPresenter(MainFrame view, GraphFileReader reader) {
         this.view = view;
         this.reader = reader;
-        this.processor = processor;
         bindEvents();
     }
 
     private void bindEvents() {
         view.addOpenEdgesListener(e -> openEdgesFile());
-        view.addOpenCoordsTextListener(e -> openCoordinatesFile(FileFormat.TEXT));
-        view.addOpenCoordsBinaryListener(e -> openCoordinatesFile(FileFormat.BINARY));
+        view.addOpenCoordsTextListener(e -> openCoordinatesTextFile());
+        view.addOpenBinaryGraphListener(e -> openBinaryGraphFile());
 
         ToolbarPanel toolbar = view.getToolbarPanel();
         toolbar.addPartitionListener(e -> partitionGraph());
         toolbar.addSaveListener(e -> saveSolution());
+        toolbar.addResetViewListener(e -> view.getGraphPanel().resetView());
     }
 
-    //loading: edges
+    // ---- loading: text edges --------------------------------------------
 
     private void openEdgesFile() {
         File file = view.chooseOpenFile("Pliki wejściowe (krawędzie)", "txt", "csv");
@@ -66,7 +67,6 @@ public class GraphPresenter {
         try {
             List<Edge> edges = reader.readEdges(file.toPath());
             applyEdges(edges);
-            currentEdgesPath = file.toPath();
         } catch (NumberFormatException ex) {
             view.showError("Błędny format danych w pliku krawędzi:\n" + ex.getMessage());
         } catch (IOException ex) {
@@ -74,67 +74,70 @@ public class GraphPresenter {
         }
     }
 
-    /** Replaces the edges and gives each referenced node a default circle position. */
+    /**
+     * Replaces the edges. Node positions are preserved for ids that already
+     * existed; new ids get a position on a default circle layout. Cluster
+     * assignments are cleared because the topology has changed.
+     */
     private void applyEdges(List<Edge> edges) {
         currentEdges.clear();
         currentEdges.addAll(edges);
+
+        Map<Integer, Node> previous = new LinkedHashMap<>();
+        for (Node n : currentNodes) {
+            previous.put(n.getId(), n);
+        }
 
         Set<Integer> ids = new LinkedHashSet<>();
         for (Edge e : edges) {
             ids.add(e.getSourceId());
             ids.add(e.getTargetId());
         }
+
+        List<Node> next = new ArrayList<>();
+        List<Integer> freshIds = new ArrayList<>();
+        for (Integer id : ids) {
+            Node prev = previous.get(id);
+            if (prev != null) {
+                next.add(prev);
+            } else {
+                freshIds.add(id);
+            }
+        }
+        int total = ids.size();
+        int startIndex = next.size();
+        for (int i = 0; i < freshIds.size(); i++) {
+            double angle = 2.0 * Math.PI * (startIndex + i) / total;
+            next.add(new Node(freshIds.get(i),
+                    DEFAULT_LAYOUT_RADIUS * Math.cos(angle),
+                    DEFAULT_LAYOUT_RADIUS * Math.sin(angle)));
+        }
+
         currentNodes.clear();
-        currentNodes.addAll(circleLayout(ids));
+        currentNodes.addAll(next);
+        clearClusters();
         refreshView();
     }
 
-    /** Default circular layout — used until real coordinates arrive. */
-    private List<Node> circleLayout(Set<Integer> ids) {
-        List<Node> result = new ArrayList<>();
-        int n = ids.size();
-        if (n == 0) {
-            return result;
-        }
-        int i = 0;
-        for (Integer id : ids) {
-            double angle = 2.0 * Math.PI * i / n;
-            result.add(new Node(id,
-                    DEFAULT_LAYOUT_RADIUS * Math.cos(angle),
-                    DEFAULT_LAYOUT_RADIUS * Math.sin(angle)));
-            i++;
-        }
-        return result;
-    }
+    // ---- loading: text coordinates --------------------------------------
 
-    // ---- loading: coordinates -------------------------------------------
-
-    private void openCoordinatesFile(FileFormat format) {
-        File file = (format == FileFormat.TEXT)
-                ? view.chooseOpenFile("Współrzędne (tekst)", "txt")
-                : view.chooseOpenFile("Współrzędne (binarne)", "bin", "dat");
+    private void openCoordinatesTextFile() {
+        File file = view.chooseOpenFile("Współrzędne (tekst)", "txt");
         if (file == null) {
             return;
         }
         try {
-            List<Node> coords = (format == FileFormat.TEXT)
-                    ? reader.readCoordinatesText(file.toPath())
-                    : reader.readCoordinatesBinary(file.toPath());
-
+            List<Node> coords = reader.readCoordinatesText(file.toPath());
             applyCoordinates(coords);
-            lastCoordsFormat = format;
-
         } catch (NumberFormatException ex) {
             view.showError("Błędny format danych: w pliku znajdują się "
                     + "wartości nieliczbowe.\n" + ex.getMessage());
-        } catch (EOFException ex) {
-            view.showError("Uszkodzony plik binarny: nieoczekiwany koniec pliku.");
         } catch (IOException ex) {
             view.showError("Błąd dostępu do pliku:\n" + ex.getMessage());
         }
     }
 
-    /** Updates positions of existing nodes by id; adds new nodes for unknown ids. */
+    /** Updates positions by id; adds new nodes for unknown ids; clears clusters. */
     private void applyCoordinates(List<Node> coords) {
         Map<Integer, Node> byId = new LinkedHashMap<>();
         for (Node n : currentNodes) {
@@ -151,7 +154,49 @@ public class GraphPresenter {
         }
         currentNodes.clear();
         currentNodes.addAll(byId.values());
+        clearClusters();
         refreshView();
+    }
+
+    // ---- loading: binary graph ------------------------------------------
+
+    private void openBinaryGraphFile() {
+        File file = view.chooseOpenFile("Pliki binarne grafu (z modułu C)", "bin", "dat");
+        if (file == null) {
+            return;
+        }
+        try {
+            OutputGraph graph = reader.readBinaryGraph(file.toPath());
+            applyBinaryGraph(graph);
+        } catch (EOFException ex) {
+            view.showError("Uszkodzony plik binarny: " + ex.getMessage());
+        } catch (IOException ex) {
+            view.showError("Błąd dostępu do pliku:\n" + ex.getMessage());
+        }
+    }
+
+    /**
+     * Replaces both the topology AND the positions with the contents of the
+     * binary file. Cluster assignments are reset (new positions invalidate
+     * any previous partition).
+     */
+    private void applyBinaryGraph(OutputGraph graph) {
+        currentEdges.clear();
+        currentEdges.addAll(graph.getEdges());
+
+        currentNodes.clear();
+        for (Node n : graph.getNodes()) {
+            // Build fresh Node instances so internal mutation (cluster, x, y)
+            // stays isolated from the immutable lists exposed by OutputGraph.
+            currentNodes.add(new Node(n.getId(), n.getX(), n.getY()));
+        }
+        refreshView();
+    }
+
+    private void clearClusters() {
+        for (Node n : currentNodes) {
+            n.setCluster(Node.UNASSIGNED);
+        }
     }
 
     // ---- refresh --------------------------------------------------------
@@ -167,16 +212,16 @@ public class GraphPresenter {
         view.getToolbarPanel().setSaveEnabled(!currentNodes.isEmpty());
     }
 
-    // ---- processing -----------------------------------------------------
+    // ---- partition (Java K-means) ---------------------------------------
 
     private void partitionGraph() {
-        if (currentEdges.isEmpty() || currentEdgesPath == null) {
-            view.showError("Najpierw wczytaj plik wejściowy z krawędziami.");
+        if (currentNodes.isEmpty()) {
+            view.showError("Najpierw wczytaj graf "
+                    + "(plik krawędzi i/lub współrzędnych albo plik binarny).");
             return;
         }
 
         ToolbarPanel toolbar = view.getToolbarPanel();
-
         int clusters;
         double margin;
         try {
@@ -195,67 +240,63 @@ public class GraphPresenter {
             view.showError("Margines nie może być wartością ujemną.");
             return;
         }
-
-        AlgorithmType algorithm = toolbar.getSelectedAlgorithm();
-        FileFormat outputFormat = FileFormat.TEXT; // C module currently emits text
-        Path outputPath = deriveOutputPath(currentEdgesPath);
-
-        ProcessingConfig config = new ProcessingConfig();
-        config.setInputPath(currentEdgesPath.toString());
-        config.setOutputPath(outputPath.toString());
-        config.setAlgorithm(algorithm);
-        config.setClusterCount(clusters);
-        config.setMargin(margin);
-        config.setOutputFormat(outputFormat);
-
-        try {
-            processor.process(config);
-            lastOutputPath = outputPath;
-            lastCoordsFormat = outputFormat;
-
-            List<Node> result = (outputFormat == FileFormat.TEXT)
-                    ? reader.readCoordinatesText(outputPath)
-                    : reader.readCoordinatesBinary(outputPath);
-
-            applyCoordinates(result);
-            view.showInfo("Podział zakończony pomyślnie.");
-
-        } catch (ProcessingException ex) {
-            view.showError("Moduł obliczeniowy zgłosił błąd:\n" + ex.getMessage());
-        } catch (EOFException ex) {
-            view.showError("Plik wynikowy modułu C jest uszkodzony.");
-        } catch (NumberFormatException ex) {
-            view.showError("Plik wynikowy zawiera nieprawidłowe dane.");
-        } catch (IOException ex) {
-            view.showError("Nie udało się odczytać pliku wynikowego:\n" + ex.getMessage());
+        if (clusters > currentNodes.size()) {
+            view.showError("Liczba klastrów (" + clusters
+                    + ") nie może być większa niż liczba węzłów ("
+                    + currentNodes.size() + ").");
+            return;
         }
+
+        int[] assignment = partitioner.partition(currentNodes, clusters, margin);
+        for (int i = 0; i < currentNodes.size(); i++) {
+            currentNodes.get(i).setCluster(assignment[i]);
+        }
+        refreshView();
+        view.showInfo("Podział zakończony pomyślnie.\nLiczba klastrów: " + clusters);
     }
 
     // ---- saving ---------------------------------------------------------
 
     private void saveSolution() {
-        if (lastOutputPath == null) {
-            view.showError("Brak rozwiązania do zapisania. Najpierw wykonaj podział.");
+        if (currentNodes.isEmpty()) {
+            view.showError("Brak danych do zapisania.");
             return;
         }
         File target = view.chooseSaveFile();
         if (target == null) {
             return;
         }
-        try {
-            Files.copy(lastOutputPath, target.toPath(),
-                    StandardCopyOption.REPLACE_EXISTING);
+
+        try (BufferedWriter writer = Files.newBufferedWriter(target.toPath())) {
+            writer.write("# Wynik aplikacji GUI_Project");
+            writer.newLine();
+            writer.write("# Algorytm: " + view.getToolbarPanel().getSelectedAlgorithm());
+            writer.newLine();
+            writer.write("# Liczba wezlow: " + currentNodes.size()
+                    + ", liczba krawedzi: " + currentEdges.size());
+            writer.newLine();
+            writer.newLine();
+
+            writer.write("# Wezly: id x y cluster");
+            writer.newLine();
+            for (Node n : currentNodes) {
+                writer.write(String.format(Locale.US, "%d %.6f %.6f %d",
+                        n.getId(), n.getX(), n.getY(), n.getCluster()));
+                writer.newLine();
+            }
+            writer.newLine();
+
+            writer.write("# Krawedzie: nazwa source target waga");
+            writer.newLine();
+            for (Edge e : currentEdges) {
+                writer.write(String.format(Locale.US, "%s %d %d %.3f",
+                        e.getName(), e.getSourceId(), e.getTargetId(), e.getWeight()));
+                writer.newLine();
+            }
             view.showInfo("Zapisano rozwiązanie do:\n" + target.getAbsolutePath());
+
         } catch (IOException ex) {
             view.showError("Nie udało się zapisać pliku:\n" + ex.getMessage());
         }
-    }
-
-    private Path deriveOutputPath(Path input) {
-        String name = input.getFileName().toString();
-        int dot = name.lastIndexOf('.');
-        String base = (dot > 0) ? name.substring(0, dot) : name;
-        String ext = (dot > 0) ? name.substring(dot) : "";
-        return input.resolveSibling(base + "_output" + ext);
     }
 }
